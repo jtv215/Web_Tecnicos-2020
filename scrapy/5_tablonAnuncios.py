@@ -7,7 +7,7 @@ from unicodedata import normalize
 import diccionario
 import re
 import lista  #pip install selenium
-from selenium import webdriver
+import seleniumTablonAnuncios
 
 def getSoup(url):
     html = urllib.request.urlopen(url)
@@ -73,101 +73,33 @@ def getURLEmpresas(url):
 def getDatos(url):
     html = urllib.request.urlopen(url)
     soup = BeautifulSoup(html, "lxml")
-    """
-    fProvincia = soup.find('span', {'itemprop': 'addressRegion'}).text
-    # print(fProvincia)
-    trans_tab = dict.fromkeys(map(ord, u'\u0301\u0308'), None)  # quitar tildes
-    provincia = normalize('NFKC', normalize(
-        'NFKD', fProvincia).translate(trans_tab))
-    provincia = provincia.upper()
-    # print(provincia)
-    """
-    fNombre = soup.find('h1').text
-    nombreEmpresa = fNombre
-    print(nombreEmpresa)
-        
-   
-    nombreTecnico = ''
-    # print(nombreTecnico)
 
-    especialidad = 'Electrodomésticos'
-    # print(especialidad)
-   
-    direccion = soup.findAll('span', attrs={'onclick': re.compile("javascript:")})[0]
-
-    print (direccion)
-
-    """   
-    email = ''
-    # print (email)
-
-    fweb = ''
-
-    if not soup.find('a', {'itemprop': 'url'}):
-        fweb = ''
-    else:
-        fweb = soup.find('a', {'itemprop': 'url'})
-        fweb = fweb.get('href')
-
-    web = fweb
-    print(web)
-
-    horario = ''
-    print(horario)
-
-    especificacion = soup.find('a', {'itemprop': 'description'}).text
-    # print (especificacion)
-
-    contratado = 'no'
-    # print (contratado)
-
-    repetido = 'no'
-    # print (repetido)
-
-    webFound = url
-    # print (webFound)
-
-    interesado = ''
-    # print (interesado)
-
-    comentario = ''
-    # print (comentario)
-
-    ocultar = 'no'
-    # print (ocultar)
-
-    localidad = soup.find('span', {'itemprop': 'addressLocality'}).text
-    trans_tab = dict.fromkeys(map(ord, u'\u0301\u0308'), None)  # quitar tildes
-    localidad = normalize('NFKC', normalize(
-        'NFKD', localidad).translate(trans_tab)).upper().replace(",", "")
-    # print (localidad)
-
-    telefono = soup.find('span', {'itemprop': 'telephone'}).text
-    # print (telefono)
+    especificacion = soup.find('p', {'style': 'font-size:15px;'}).text.strip()
+    # print (especificacion)           
+    
+    dataSele = seleniumTablonAnuncios.abreSelenium(url)
 
     data = {
-        'provincia': provincia,
-        'nombreEmpresa': nombreEmpresa,
-        'nombreTecnico': nombreTecnico,
-        'especialidad': especialidad,
-        'direccion': direccion,
-        'email': email,
-        'web': web,
-        'horario': horario,
+        'provincia': dataSele['provincia'],
+        'nombreEmpresa': dataSele['nombreEmpresa'],
+        'nombreTecnico': dataSele['nombreTecnico'],
+        'especialidad': 'Electrodomésticos',
+        'direccion': '',
+        'email': '',
+        'web': '',
+        'horario': '',
         'especificacion': especificacion,
-        'contratado': contratado,
-        'repetido': repetido,
-        'webFound': webFound,
-        'interesado': interesado,
-        'comentario': comentario,
-        'ocultar': ocultar,
-        'localidad': localidad,
-        'telefono': telefono
+        'contratado': 'no',
+        'repetido': 'no',
+        'webFound': url,
+        'interesado': '',
+        'comentario': '',
+        'ocultar': 'no',
+        'localidad':  dataSele['localidad'],
+        'telefono':  dataSele['telefono']
     }
-    # return data
-    """
-    return 0
-
+    return data    
+    # return 0
 
 def mostrarDatos(data, cont):
     print(str(cont) + '**********************')
@@ -272,33 +204,34 @@ def main():
     soup = getSoup(url)
 
     # # PASO 1 Obtiene url hojas
-    # listaPaginas = getListaPaginas(soup)
-    # listaPaginas.insert(0, url)
+    listaPaginas = getListaPaginas(soup)
+    listaPaginas.insert(0, url)
     # lista.imprime(listaPaginas)
 
-    # # PASO 2 Obtienes url empresas
+    # # PASO 2 Obtienes url empresas "comentar"
     # listaURLEmpresas = getURLEmpresas(listaPaginas[0])
+    # listaURLEmpresas = getURLEmpresas("https://www.tablondeanuncios.com/reparacion-electrodomesticos/servicio_tecnico_otsein_carboneras_950651922-3469680.htm")
     # lista.imprime(listaURLEmpresas)
 
-    # # PASO 2.1 comprobar datos de las empresas __hay que comentar  
-    url =  "https://www.tablondeanuncios.com/reparacion-electrodomesticos/almeria_reparaciones-1926790.htm"
-    getDatos(url)
-    # mostrarDatos(datosEmpresa,cont)
+    # # PASO 2.1 comprobar --> datos de las empresas  "hay que comentar"
+    # url =  "https://www.tablondeanuncios.com/reparacion-electrodomesticos/almeria_reparaciones-1926790.htm"
+    # data = getDatos(url)
+    # lista.mostrarJSON(data)
 
-    """
+    
     cont = 0
-    contadorEmpresasQuieres = 2
+    contadorEmpresasQuieres = 10
     listaFinalDatos = []
     salirBucle = False
 
-    # PASO 3 Recorre las hojas y las empresas
+    # PASO 3 Recorre las paginas y las empresas
     for urlPagina in listaPaginas:
         listaEmpresas = getURLEmpresas(urlPagina)
         for urlEmpresa in listaEmpresas:
             cont += 1
-            # print(str(cont)+" "+ urlEmpresa)
+            print(str(cont)+" "+ urlEmpresa)
             datosEmpresa = getDatos(urlEmpresa)
-            # mostrarDatos(datosEmpresa,cont)
+            mostrarDatos(datosEmpresa,cont)
 
             comprueba = compruebaExisteDiccionario(
                 datosEmpresa['especificacion'])
@@ -321,7 +254,7 @@ def main():
     else:
         print('Los datos se estan guardado correctamente en la base de datos')
         addListaEmpresa(listaFinalDatos)
-    """
+    
 
 
 if __name__ == '__main__':
