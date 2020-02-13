@@ -5,9 +5,8 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 require_once 'conexion.php';
 
-
 //* Mostrar todas las empresas, (localidades y telefonos) *//  oK
-$app->get('/empresa', function (Request $request, Response $response) {
+$app->get('/empresa', function (Request $request, Response $response)  {
 
     $db = conexion();
     $sql = "SELECT * FROM empresa";
@@ -47,6 +46,7 @@ $app->get('/empresa', function (Request $request, Response $response) {
                 'code' => 200,
                 "data" => $response
             );
+        
             return json_encode($response);
         }
     }

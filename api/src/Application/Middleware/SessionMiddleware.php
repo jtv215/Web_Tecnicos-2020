@@ -18,7 +18,10 @@ class SessionMiddleware implements Middleware
         if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
             session_start();
             $request = $request->withAttribute('session', $_SESSION);
+
+
         }
+   
 
         return $handler->handle($request);
     }
