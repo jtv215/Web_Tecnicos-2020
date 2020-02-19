@@ -4,6 +4,14 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use \Firebase\JWT\JWT;
 
+
+$app->get('/pruebalogin', function ($request, $response, $args) {
+    header("token:"."123456");
+    $prueba = "funciona API";
+   
+    return  json_encode($prueba);
+});
+
 //* Se realiza un login *//   ok
 $app->post('/login', function (Request $request, Response $response) {
     $db = conexion();
@@ -16,12 +24,9 @@ $app->post('/login', function (Request $request, Response $response) {
 
     // verify email address.
     if (!$user) {
-        $response = array(
-            'status' => 'Error',
-            'code' => 404,
-            'data' => 'El correo o la contraseña es incorrecta'
-        );
-        return json_encode($response);
+        $message = 'El correo o la contraseña es incorrecta';
+        return errorResponse($response, $message);
+
     }
 
     // verify password.
@@ -39,24 +44,27 @@ $app->post('/login', function (Request $request, Response $response) {
         ];
         $secret =  $settings['jwt']['secret'];
         $token = JWT::encode($payload, $secret, "HS256");
-
+        
+        
         addTokenBD($token, $user['id']);
+        $user = [
+            'id' => $user['id'],
+            'email' => $user['email']
+        ];
 
         return $this->response->withJson([
             'status' => 'Success',
             'code' => 200,
-            'message' => 'El token se ha añadido a la cabecera',
-            //'token' => $user
+            'message' => $user
 
         ])
-            ->withAddedHeader('Authorization', $token);
+            ->withAddedHeader('Authorization', $token)
+            ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization');
+            
     } else {
-        $response = array(
-            'status' => 'Error',
-            'code' => 404,
-            'data' => 'El correo o la contraseña es incorrecta'
-        );
-        return json_encode($response);
+        $message = 'El correo o la contraseña es incorrecta';
+        return errorResponse($response, $message);
+
     }
 });
 
@@ -99,6 +107,7 @@ function addTokenBD($token, $idUsuario)
         return 'Error al ejecutar la consulta';
     } else {
         if ($count == 0) {
+            
             $response = array(
                 'status' => 'ERROR',
                 'code' => 404,

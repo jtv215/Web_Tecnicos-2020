@@ -1,38 +1,40 @@
+import { AuthGuard } from './services/auth.guard';
+import { TokenInterceptorService } from './services/token-interceptor.service';
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-	
-import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeroesComponent } from './heroes/heroes.component';
-import { MenuComponent } from './menu/menu.component';
-import { ToolbarComponent } from './toolbar/toolbar.component';
-import { EmployeeComponent } from './employees/employee/employee.component';
-import { EmployeeListComponent } from './employees/employee-list/employee-list.component';
-import {materialModule} from './material.module';
+//componentes
+import { SignupComponent } from './components/signup/signup.component';
+import { SigninComponent } from './components/signin/signin.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { HomeComponent } from './components/home/home.component';
+//import
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PrincipalComponent } from './components/principal/principal.component';
+import { FormularioComponent } from './components/formulario/formulario.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeroesComponent,
-    MenuComponent,
-    ToolbarComponent,
-    EmployeeComponent,
-    EmployeeListComponent,
-    
-  
-    
-    
+    HomeComponent,
+    NavbarComponent,
+    SigninComponent,
+    SignupComponent,
+    PrincipalComponent,
+    FormularioComponent,
   ],
   imports: [
-    BrowserModule,
+    BrowserModule,AppRoutingModule,
     AppRoutingModule,
-    HttpClientModule,
-    materialModule
-    
+    FormsModule,HttpClientModule, BrowserAnimationsModule,
   ],
-  providers: [],
+  providers: [ AuthGuard,
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
