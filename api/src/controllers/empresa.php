@@ -2,103 +2,76 @@
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+
 require_once 'src/functions/functions.php';
 require_once 'conexion.php';
 
+
 //* Mostrar todas las empresas, (localidades y telefonos) *//  oK
-$getAllEmpresa= "";
-$app->get('/empresa', function (Request $request, Response $response)  {
+$getAllEmpresa = "";
+$app->get('/empresa', function (Request $request, Response $response) {
 
-    $db = conexion();
     $sql = "SELECT * FROM empresa";
-    $stmt = $db->prepare($sql);
-    $stmt->execute();
-    $count = $stmt->rowCount(); //Devuelve el nº de filas.
+    $stmt = executeQuery($sql);
+    $count = $stmt->rowCount();
 
-    if (!$stmt) {
-        return 'Error al ejecutar la consulta';
+    if ($count == 0) {
+        $message = "No hay ninguna empresa en la base de datos";
+        return errorResponse($response, $message);
     } else {
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $response = array();
+        foreach ($data as $row) {
 
-        if ($count == 0) {
-            $response = array(
-                'status' => 'ERROR',
-                'code' => 404,
-                "data" => "No hay ninguna empresa en la base de datos"
+            $idEmpresas = $row['idEmpresa'];
+            $telefono = getTelefono($idEmpresas);
+            $telefono = array(
+                'telefono' => $telefono
             );
-            return json_encode($response);
-        } else {
-
-            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            $response = array();
-            foreach ($data as $row) {
-
-                $idEmpresas = $row['idEmpresa'];
-                $telefono = getTelefono($idEmpresas);
-                $telefono = array(
-                    'telefono' => $telefono
-                );
-                //unir array datosEmpresa y telefono
-                $array_resultante = array_merge($row, $telefono);
-                array_push($response, $array_resultante);
-            }
-
-            $response = array(
-                'status' => 'success',
-                'code' => 200,
-                "data" => $response
-            );
-            header("auth-token:" ."1223455678");
-            header('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization,*');
-            header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-           // header("Access-Control-Expose-headers", 'Authorization, auth-token');
-            return json_encode($response);
+            //unir array datosEmpresa y telefono
+            $array_resultante = array_merge($row, $telefono);
+            array_push($response, $array_resultante);
         }
+        return response($response, $response);
     }
 });
 
+
 //* Muestra una empresa, (localidad y telefonos), y mensajes con un Id *//   ok
-$getEmpresaID= "";
+$getEmpresaID = "";
 $app->get('/empresa/{idEmpresa}', function (Request $request, Response $response) {
     $idEmpresa = $request->getAttribute('idEmpresa');
 
     $sql = "SELECT * FROM empresa WHERE idEmpresa = '" . $idEmpresa . "' ";
-    $db = conexion();
-    $stmt = $db->prepare($sql);
-    $stmt->execute();
+    $stmt = executeQuery($sql);
     $count = $stmt->rowCount();
 
-    if (!$stmt) {
-        return 'Error al ejecutar la consulta';
+    if ($count == 0) {
+        $message = 'No hay ninguna empresa con ese ID en la base de datos';
+        return errorResponse($response, $message);
     } else {
+        //get dataEmpresa
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($count == 0) {
-            $message = 'No hay ninguna empresa con ese ID en la base de datos';
-            return errorResponse($response, $message);
- 
-        } else {
-            //get dataEmpresa
-            $data = $stmt->fetch(PDO::FETCH_ASSOC);
+        //get Telefono
+        $idempresa = $data['idEmpresa'];
+        $telefono = getTelefono($idEmpresa);
+        $mensaje = getMensaje($idEmpresa);
 
-            //get Telefono
-            $idempresa = $data['idEmpresa'];
-            $telefono = getTelefono($idEmpresa);
-            $mensaje = getMensaje($idEmpresa);
+        $response = array(
+            'status' => 'Success',
+            'code' => 200,
+            'data' => $data,
+            'telefono' => $telefono,
+            'mensaje' => $mensaje
 
-            $response = array(
-                'status' => 'Success',
-                'code' => 200,
-                'data' => $data,
-                'telefono' => $telefono,
-                'mensaje' => $mensaje
-
-            );
-            return json_encode($response);
-        }
+        );
+        return json_encode($response);
     }
 });
 
 //* Add empresa *//
-$addEmpresa= "";
+$addEmpresa = "";
 $app->post('/empresa', function (Request $request, Response $response) {
     $data = $request->getParsedBody();
     $telefono = $data['telefono'];
@@ -117,7 +90,6 @@ $app->post('/empresa', function (Request $request, Response $response) {
             //comprueba localidad-> caso 2
             $message = 'No se ha añadido a la base de datos porque el telefono ya existe y la localidad tambien';
             return errorResponse($response, $message);
-
         } else {
             //añadir pueblo ->caso 3
             //añadir pueblo aunque sea con el mismo telefono //con esto podremos saber donde trabaja
@@ -126,10 +98,9 @@ $app->post('/empresa', function (Request $request, Response $response) {
             if ($result2 == false) {
                 $message = 'La localidad y el telefono no se han añadido';
                 return errorResponse($response, $message);
-               
             } else {
                 $message = 'Se ha añadido correctamente la localidad o el telefono';
-                return response($response, $message);                
+                return response($response, $message);
             }
         }
     }
@@ -149,11 +120,9 @@ $app->post('/empresa', function (Request $request, Response $response) {
             if ($result2 == false) {
                 $message = 'La localidad y el telefono no se han añadido';
                 return errorResponse($response, $message);
-            
             } else {
                 $message = 'Se ha añadido correctamente la localidad o el telefono';
-                return response($response, $message);  
-
+                return response($response, $message);
             }
         } else {
             //añadir empresa -> caso 5
@@ -164,8 +133,9 @@ $app->post('/empresa', function (Request $request, Response $response) {
 });
 
 
+
 //* Actualizar empresa *//   ok
-$updateEmpresa= "";
+$updateEmpresa = "";
 $app->post('/actualizarEmpresa', function (Request $request, Response $response, array $args) {
 
     $data = $request->getParsedBody();
@@ -207,11 +177,9 @@ $app->post('/actualizarEmpresa', function (Request $request, Response $response,
             $message = 'No hay ninguna empresa con ese id o
              no se ha actualizado ningun datos porque son los mismos datos';
             return errorResponse($response, $message);
-         
         } else {
             $message = 'Se ha actualizado los datos de la empresa correctamente';
             return response($response, $message);
-     
         }
     }
 });
@@ -220,26 +188,12 @@ $app->post('/actualizarEmpresa', function (Request $request, Response $response,
 $app->delete('/empresa/{idEmpresa}', function (Request $request, Response $response) {
     $idEmpresa = $request->getAttribute('idEmpresa');
 
-    $db = conexion();
     $sql = "DELETE FROM empresa WHERE idEmpresa = '" . $idEmpresa . "' ";
-    $stmt = $db->prepare($sql);
-    $stmt->execute();
-    $count = $stmt->rowCount();
+    $stmt = executeQuery($sql);
 
-    if (!$stmt) {
-        return 'Error al ejecutar la consulta';
-    } else {
-        if ($count == 0) {
-            $message = 'No hay ninguna empresa con ese id';
-           return errorResponse($response, $message);
-            
-        } else {
-            $message = 'Se ha eliminado la empresa y todos sus registros en sus tablas correspondientes';
-            return response($response, $message);
-
-
-        }
-    }
+    $messageError = 'No hay ninguna empresa con ese id';
+    $messageSuccess = 'Se ha eliminado la empresa y todos sus registros en sus tablas correspondientes';
+    return responseMessage($response, $stmt, $messageError, $messageSuccess);
 });
 
 
@@ -256,10 +210,8 @@ function comprobarTelefono($request, $response)
     $telefono = $data['telefono'];
 
     $sql = "SELECT idEmpresa FROM telefono WHERE telefono = '" . $telefono . "' ";
-    $db = conexion();
-    $stmt = $db->prepare($sql);
-    $stmt->execute();
-    $count = $stmt->rowCount(); //Devuelve el nº de filas.
+    $stmt = executeQuery($sql);
+    $count = $stmt->rowCount();
 
     $idEmpresa = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -429,3 +381,27 @@ function addLocalidadTelefono2($idEmpresa, $telefono, $localidad)
         }
     }
 }
+
+
+//************* Funciones ************************ */
+
+
+function getMensaje($idEmpresa){
+    $db = conexion();
+    $sql= "SELECT * FROM mensaje WHERE idEmpresa = $idEmpresa";
+    $stmt = $db->prepare($sql);
+    $stmt->execute();
+    $count = $stmt->rowCount(); //Devuelve el nº de filas.
+
+    if (!$stmt){
+        return 'Error al ejecutar la consulta';
+    }else{  
+        if($count==0){           
+            return 'No hay mensaje';
+        }else{  
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $data;
+        }
+    }
+}
+

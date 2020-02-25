@@ -6,7 +6,7 @@
       </div>
 
       <div class="card-body">
-        <form (submit)="signin()">
+        <form #formLogin="ngForm" (submit)="signin()">
           <div class="form-group">
             <!-- ngmodel envia los campos a la clase ts-->
             <!-- error hay que importar import { FormsModule }-->
@@ -19,12 +19,12 @@
 
           </div>
 
-          <button type="submit" class= "btn btn-primary btn-block">
+          <button type="submit" class= "btn btn-primary btn-block" [disabled]="!formLogin.form.valid">
             Entrar
           </button>
 
           <div *ngIf="mostrar">
-            <p class="text-danger">El correo o la contraseña es incorrecta*</p>
+            <p class="text-danger">El correo o contraseña incorrecta *</p>
           </div>
 
         </form>

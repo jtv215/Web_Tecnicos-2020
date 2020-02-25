@@ -5,13 +5,6 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use \Firebase\JWT\JWT;
 
 
-$app->get('/pruebalogin', function ($request, $response, $args) {
-    header("token:"."123456");
-    $prueba = "funciona API";
-   
-    return  json_encode($prueba);
-});
-
 //* Se realiza un login *//   ok
 $app->post('/login', function (Request $request, Response $response) {
     $db = conexion();
@@ -22,11 +15,9 @@ $app->post('/login', function (Request $request, Response $response) {
     $sth->execute();
     $user = $sth->fetch(PDO::FETCH_ASSOC);
 
-    // verify email address.
-    if (!$user) {
+    if (!$user) {    // verify email address.
         $message = 'El correo o la contraseña es incorrecta';
         return errorResponse($response, $message);
-
     }
 
     // verify password.
@@ -44,9 +35,9 @@ $app->post('/login', function (Request $request, Response $response) {
         ];
         $secret =  $settings['jwt']['secret'];
         $token = JWT::encode($payload, $secret, "HS256");
-        
-        
-        addTokenBD($token, $user['id']);
+
+
+        addTokenBD($response, $token, $user['id']);
         $user = [
             'id' => $user['id'],
             'email' => $user['email']
@@ -55,114 +46,62 @@ $app->post('/login', function (Request $request, Response $response) {
         return $this->response->withJson([
             'status' => 'Success',
             'code' => 200,
-            'message' => $user
+            'data' => $user
 
         ])
             ->withAddedHeader('Authorization', $token)
             ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization');
-            
     } else {
         $message = 'El correo o la contraseña es incorrecta';
         return errorResponse($response, $message);
-
     }
 });
 
 //* Se prueba un token y te devuelve coches *//   ok
 $app->get('/coches', function (Request $request, Response $response) {
-
-    $esValido = verificarToken($request);  //verifica el token
+    $esValido = verificarToken($request);
 
     if (!$esValido) {
-        $response = array(
-            'status' => 'ERROR',
-            'code' => 404,
-            "data" => 'No hay ningún usuario con ese token'
-        );
-        return json_encode($response);
+        $message = 'No hay ningún usuario con ese token';
+        return errorResponse($response, $message);
     }
-
     if ($esValido) {
-        $response = array(
-            'status' => 'success',
-            'code' => 200,
-            "data" => 'AUDI, Citroen'
-        );
-        return json_encode($response);
+        $message = 'AUDI, Citroen';
+        return response($response, $message);
     }
 });
 
 
+$app->get('/pruebalogin', function ($request, $response, $args) {
+    header("token:" . "123456");
+    $prueba = "funciona API";
+
+    return  json_encode($prueba);
+});
+
 
 /*********************** USEFULL FUNCTIONS **************************************/
-function addTokenBD($token, $idUsuario)
+function addTokenBD($response, $token, $idUsuario)
 {
-    $db = conexion();
-    $sql = "UPDATE usuario SET token = '" . $token . "' where id = '" . $idUsuario . "' ";
-    $stmt = $db->prepare($sql);
-    $stmt->execute();
-    $count = $stmt->rowCount();
+    $sql = "UPDATE usuario SET token = '" . $token . "' where id = '" . $idUsuario . "' ";    
+    $stmt = executeQuery($sql);
 
-    if (!$stmt) {
-        return 'Error al ejecutar la consulta';
-    } else {
-        if ($count == 0) {
-            
-            $response = array(
-                'status' => 'ERROR',
-                'code' => 404,
-                'data' => 'No hay ningún usuario con ese id'
-            );
-            return json_encode($response);
-        } else {
-
-            $response = array(
-                'status' => 'Success',
-                'code' => 200,
-                'data' => 'El token se ha actualizado correctamente en la BD'
-
-            );
-            return json_encode($response);
-        }
-    }
+    $messageError = 'No hay ningún usuario con ese id';
+    $messageSuccess = 'El token se ha actualizado correctamente en la BD';
+    return responseMessage($response, $stmt, $messageError, $messageSuccess);
 }
 
 
 function verificarToken($request)
 {
-
     $token = $request->getHeaderLine('Authorization');
-    $db = conexion();
     $sql = "SELECT * FROM usuario WHERE token = '" . $token . "' ";
-    $stmt = $db->prepare($sql);
-    $stmt->execute();
-    $data = $stmt->fetch(PDO::FETCH_ASSOC);
-    $idempresa = $data['email'];
-    $count = $stmt->rowCount(); //Devuelve el nº de filas.
+    $stmt = executeQuery($sql);
+    $count = $stmt->rowCount();
 
-
-    if (!$stmt) {
-        return 'Error al ejecutar la consulta';
+    if ($count == 0) {
+        return false;
     } else {
-
-        if ($count == 0) {
-            $response = array(
-                'status' => 'ERROR',
-                'code' => 404,
-                'data' => "No hay ningún usuario con ese token",
-                'token' => 'false'
-            );
-            return false;
-        } else {
-
-            $response = array(
-                'status' => 'Success',
-                'code' => 200,
-                'data' => "El token es válido",
-                'token' => 'TRUE'
-
-            );
-            return true;
-        }
+        return true;
     }
 }

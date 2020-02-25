@@ -33,7 +33,7 @@ export class SignupComponent implements OnInit {
     this.authService.registrarse(this.user)
       .subscribe(
         result => {
-          console.log(result)     
+          //console.log(result)     
           this.activarError(result['status'])
 
           

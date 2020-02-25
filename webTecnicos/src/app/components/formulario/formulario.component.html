@@ -1,3 +1,58 @@
-<p>
-  formulario works!
-</p>
+<div class="card">
+
+  <!--<div class="card-header ">     
+        {{nombre}}     
+  </div>
+  -->
+  <div class="card-body">
+    <form (ngSubmit)="onSubmit()">
+      <div class="row">
+
+        <div class="col-xs-12 col-sm-4">
+          <mat-form-field>
+            <mat-label>Provincia</mat-label>
+            <mat-select [(value)]="empresaFiltro.provincia" name="provincia" [(ngModel)]="empresaFiltro.provincia">
+              <mat-option *ngFor="let item of provincias" [value]="item">
+                {{item}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col-xs-12 col-sm-4">
+          <mat-form-field>
+            <mat-label>Especialidad</mat-label>
+            <mat-select [(value)]="empresaFiltro.especialidad" name="especialidad"
+              [(ngModel)]="empresaFiltro.especialidad">
+              <mat-option *ngFor="let item of especialidades" [value]="item">
+                {{item}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col-xs-12 col-sm-4">
+          <mat-form-field>
+            <mat-label>Contratado</mat-label>
+            <mat-select [(value)]="empresaFiltro.contratado" name="contratado" [(ngModel)]="empresaFiltro.contratado">
+              <mat-option *ngFor="let item of contratado" [value]="item">
+                {{item}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div >
+          <button type="submit" class="btn btn-outline-warning">
+            Buscar
+          </button>
+        </div>
+
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- [dataFiltro] es la variable receptora del hijo
+      "nombre" es la variable donde contiene el nombre-->
+<app-list-empresa [dataFiltro]="data"></app-list-empresa>

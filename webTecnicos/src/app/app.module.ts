@@ -1,3 +1,4 @@
+import { MaterialModule } from './material/material.module';
 import { AuthGuard } from './services/auth.guard';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 
@@ -11,12 +12,12 @@ import { SigninComponent } from './components/signin/signin.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
 //import
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PrincipalComponent } from './components/principal/principal.component';
 import { FormularioComponent } from './components/formulario/formulario.component';
-
+import { ListEmpresaComponent } from './components/list-empresa/list-empresa.component';
 
 @NgModule({
   declarations: [
@@ -27,11 +28,15 @@ import { FormularioComponent } from './components/formulario/formulario.componen
     SignupComponent,
     PrincipalComponent,
     FormularioComponent,
+    ListEmpresaComponent,
   ],
   imports: [
     BrowserModule,AppRoutingModule,
-    AppRoutingModule,
-    FormsModule,HttpClientModule, BrowserAnimationsModule,
+    MaterialModule,// componentes de angular material
+    FormsModule,
+    HttpClientModule,//servicios http
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
   ],
   providers: [ AuthGuard,
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true }],

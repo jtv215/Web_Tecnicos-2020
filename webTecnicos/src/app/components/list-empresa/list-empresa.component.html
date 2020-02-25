@@ -1,0 +1,77 @@
+<!-- Este es el componente hijo-->
+<div  class="idTop" >
+  <div class="search-div" >
+    <mat-form-field class="search-form-field"   floatLabel="never" style="width:400px !important">
+      <input matInput [(ngModel)]="searchKey" placeholder="Buscar" autocomplete="off" (keyup)="applyFilter()">
+      <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <button mat-raised-button (click)="onCreate()" class="btnRight">
+      <mat-icon>add</mat-icon>Añadir
+    </button>
+
+    <button mat-raised-button (click)="cargarTablaWithService()" class="btnRight">
+      <mat-icon>update</mat-icon> Actualizar
+    </button>
+
+  </div>
+</div>
+
+  <div class="mat-elevation-z8">
+    <mat-table [dataSource]="listData" matSort>
+      <ng-container matColumnDef="idEmpresa">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element.idEmpresa}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="provincia">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>provincia</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element.provincia}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="nombreEmpresa">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Empresa</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element.nombreEmpresa}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="especialidad">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Especialidad</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element.especialidad}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="contratado">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Contratado</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element.contratado}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <button mat-icon-button (click)="onEdit(row)">
+            <mat-icon>launch</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="onDelete(row.$key)">
+            <mat-icon>delete_outline</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+
+      <ng-container matColumnDef="loading">
+        <mat-footer-cell *matFooterCellDef colspan="6">
+          Cargando datos...
+        </mat-footer-cell>
+      </ng-container>
+      <ng-container matColumnDef="noData">
+        <mat-footer-cell *matFooterCellDef colspan="6">
+          No hay datos.
+        </mat-footer-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':listData!=null}"></mat-footer-row>
+      <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(listData!=null && listData.data.length==0)}">
+      </mat-footer-row>
+
+
+    </mat-table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButtons></mat-paginator>
+  </div>

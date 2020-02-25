@@ -6,129 +6,27 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 require_once 'conexion.php';
 
 //* Muestra todos los telefonos *//   ok
+$getAllTelefono = "";
 $app->get('/telefono', function (Request $request, Response $response) {
-
-    $db = conexion();
     $sql = "SELECT * FROM telefono";
-    $stmt = $db->prepare($sql);
-    $stmt->execute();
-    $count = $stmt->rowCount();
+    $stmt = executeQuery($sql);
 
-    if (!$stmt) {
-        return 'Error al ejecutar la consulta';
-    } else {
-        if ($count == 0) {
-            $response = array(
-                'status' => 'ERROR',
-                'code' => 404,
-                "data" => "No hay ningun telefono en la base de datos"
-            );
-            return json_encode($response);
-        } else {
-            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            $response = array(
-                'status' => 'success',
-                'code' => 200,
-                "data" => $data
-            );
-            return json_encode($response);
-        }
-    }
+    $messageError = 'No hay ningun telefono en la base de datos';
+    return responseObject($response, $stmt, $messageError);    
+  
 });
-
 
 //* Muestra todos los telefonos que tiene la empresa con dicho ID *//  ok
+$getTelefonoID = "";
 $app->get('/telefono/{idEmpresa}', function (Request $request, Response $response) {
-
     $idEmpresa = $request->getAttribute('idEmpresa');
 
-    $data = getTelefono($idEmpresa);
+    $sql = "SELECT * FROM telefono WHERE idEmpresa = '". $idEmpresa ."' ";
+    $stmt = executeQuery($sql);
 
-    if ($data == 'NoExisteElID') {
-        $response = array(
-            'status' => 'ERROR',
-            'code' => 404,
-            'data' => 'No hay ningún id con esa esa empresa'
-        );
-        return json_encode($response);
-    } else {
-        $response = array(
-            'status' => 'Success',
-            'code' => 200,
-            'data' => $data
-        );
-        return json_encode($response);
-    }
+    $messageError = 'No hay ningun telefono con ese id de empresa';
+    return responseObject($response, $stmt, $messageError);
 });
-
-
-//* Actualizar telefono con un Id del telefono *//   ok
-$app->post('/telefono/{idTelefono}/{telefono}', function (Request $request, Response $response, array $args) {
-
-    $idTelefono = $request->getAttribute('idTelefono');
-    $telefono = $request->getAttribute('telefono');
-
-    $db = conexion();
-    $sql = "UPDATE telefono SET telefono = '" . $telefono . "' where idTelefono = '" . $idTelefono . "' ";
-    $stmt = $db->prepare($sql);
-    $stmt->execute();
-    $count = $stmt->rowCount();
-
-    if (!$stmt) {
-        return 'Error al ejecutar la consulta';
-    } else {
-        if ($count == 0) {
-            $response = array(
-                'status' => 'ERROR',
-                'code' => 404,
-                'data' => 'No hay ningún telefono con ese id'
-            );
-            return json_encode($response);
-        } else {
-            $response = array(
-                'status' => 'Success',
-                'code' => 200,
-                'data' => 'Se ha actualizado el telefono correctamente'
-            );
-            return json_encode($response);
-        }
-    }
-});
-
-//* Borrar telefono con un Id del telefono*//   ok
-$app->delete('/telefono/{idTelefono}', function (Request $request, Response $response) {
-    $idTelefono = $request->getAttribute('idTelefono');
-
-    $db = conexion();
-    $sql = "DELETE FROM telefono WHERE idTelefono = '" . $idTelefono . "' ";
-    $stmt = $db->prepare($sql);
-    $stmt->execute();
-    $count = $stmt->rowCount();
-
-    if (!$stmt) {
-        return 'Error al ejecutar la consulta';
-    } else {
-        if ($count == 0) {
-            $response = array(
-                'status' => 'ERROR',
-                'code' => 404,
-                'data' => 'No hay ningún telefono con ese id'
-            );
-            return json_encode($response);
-        } else {
-
-            $response = array(
-                'status' => 'Success',
-                'code' => 200,
-                'data' => 'Se ha eliminado la localidad y el telefono correctamente'
-            );
-            return json_encode($response);
-        }
-    }
-});
-
-
-
 
 //* Añade una localidad y su telefono *//   ok
 $app->POST('/telefono', function (Request $request, Response $response, array $args) {
@@ -145,28 +43,45 @@ $app->POST('/telefono', function (Request $request, Response $response, array $a
 
         $result2 = addLocalidadTelefono($idEmpresa, $telefono, $localidad);
         if ($result2 == false) {
-            $response = array(
-                'status' => 'Error',
-                'code' => 404,
-                'data' => 'La localidad y el telefono no se han añadido'
-            );
-            return json_encode($response);
+            $messageError ='La localidad y el telefono no se han añadido';
+            return errorResponse($response, $messageError);
+       
         } else {
-            $response = array(
-                'status' => 'Success',
-                'code' => 200,
-                'data' => 'Se ha añadido correctamente la localidad o el telefono'
-            );
-            return json_encode($response);
+            $messageSuccess = 'Se ha añadido correctamente la localidad o el telefono';
+            return response($response, $messageSuccess);
+    
         }
-    } else {  //Ya existe localidad y telefono        
-        $response = array(
-            'status' => 'Error',
-            'code' => 404,
-            'data' => 'Ya existe la localidad y el telefono'
-        );
-        return json_encode($response);
+    } else {  //Ya existe localidad y telefono   
+        $messageError ='Ya existe la localidad y el telefono';
+        return errorResponse($response, $messageError);    
+      
     }
+});
+
+//* Actualizar telefono con un Id del telefono *//   ok
+$updateTelefono= "";
+$app->put('/telefono/{idTelefono}/{telefono}', function (Request $request, Response $response, array $args) {
+    $idTelefono = $request->getAttribute('idTelefono');
+    $telefono = $request->getAttribute('telefono');
+
+    $sql = "UPDATE telefono SET telefono = '" . $telefono . "' where idTelefono = '" . $idTelefono . "' ";
+    $stmt = executeQuery($sql);
+
+    $messageError = 'No hay ningún telefono con ese id';
+    $messageSuccess = 'Se ha actualizado el telefono correctamente';
+    return responseMessage($response, $stmt, $messageError, $messageSuccess);
+});
+
+//* Borrar telefono con un Id del telefono*//   ok
+$app->delete('/telefono/{idTelefono}', function (Request $request, Response $response) {
+    $idTelefono = $request->getAttribute('idTelefono');
+
+    $sql = "DELETE FROM telefono WHERE idTelefono = '" . $idTelefono . "' ";
+    $stmt = executeQuery($sql);
+
+    $messageError = 'No hay ningún telefono con ese id';
+    $messageSuccess = 'Se ha eliminado la localidad y el telefono correctamente';
+    return responseMessage($response, $stmt, $messageError, $messageSuccess);
 });
 
 

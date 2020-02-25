@@ -6,7 +6,7 @@
       </div>
 
       <div class="card-body">
-        <form (submit)="signUp()">
+        <form #formRegistro="ngForm" (submit)="signUp()">
           <div class="form-group">
             <!-- ngmodel envia los campos a la clase ts-->
             <!-- error hay que importar import { FormsModule }-->
@@ -18,13 +18,14 @@
             <input type="password" [(ngModel)]="user.password" name="password" class="form-control" placeholder="Contraseña" required autofocus>
 
           </div>
-
-          <button type="submit" class= "btn btn-primary btn-block">
+            <!-- [disabled]="!formlogin.form.valid" Se habilita el bton cuando se haya rellenado los datos.
+            -->
+          <button type="submit" class= "btn btn-primary btn-block" [disabled]="!formRegistro.form.valid">
             Registrarse
           </button>
       
             <div *ngIf="mostrar">
-            <p class="text-danger"> El correo ya existe*</p>
+            <p class="text-danger"> {{message}} El correo ya existe*</p>
             </div>
             
         </form>
