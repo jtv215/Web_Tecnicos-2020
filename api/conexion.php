@@ -7,7 +7,7 @@ function conexion() {
     $dbuser="root";
     $dbpass="root";
     $dbname="bd_lineablanca"; 
-  //  $dbname="bd_prueba"; 
+    //$dbname="bd_prueba"; 
 
     try {
         $conexion = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);      

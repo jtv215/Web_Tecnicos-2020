@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { EmpresaService } from './../../services/empresa.service';
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
@@ -15,11 +16,12 @@ export class ListEmpresaComponent implements OnInit {
 
   datos: string[];
   @Input() dataFiltro: string[]; ngOnChanges(changes: any) {
-    this.cargarDataFiltro(this.dataFiltro);    
+    this.cargarDataFiltro(this.dataFiltro);
   }
-  
+
   constructor(
     private empresaService: EmpresaService,
+    private route: Router
   ) { }
 
   listData: MatTableDataSource<any>;
@@ -34,8 +36,8 @@ export class ListEmpresaComponent implements OnInit {
   }
 
   cargarTablaWithService() {
-    this.empresaService.getEmpresdatosMin().subscribe(
-      result => {       
+    this.empresaService.getEmpresaDatosMin().subscribe(
+      result => {
         this.datos = result['data']
         this.rellenarTabla(this.datos)
       });
@@ -65,31 +67,45 @@ export class ListEmpresaComponent implements OnInit {
     this.listData.filter = this.searchKey.trim().toLowerCase();
   }
 
-  onDelete($key) {
-    if (confirm('Are you sure to delete this record ?')) {
-      //this.service.deleteEmployee($key);
+  onDelete(id) {
+
+
+    if (confirm('¿Estas seguro de eliminar?')) {
+      this.empresaService.deleteEmpresa(id).subscribe(
+        result => {
+          if (result['code'] == 200) {
+            this.cargarTablaWithService()
+          } else {
+            alert("Error al borrar mensaje");
+          }
+        }
+      );
       // this.notificationService.warn('! Deleted successfully');
     }
   }
-  /*
-    onCreate() {
-      this.service.initializeFormGroup();
-      const dialogConfig = new MatDialogConfig();
-      dialogConfig.disableClose = true;
-      dialogConfig.autoFocus = true;
-      dialogConfig.width = "60%";
-      this.dialog.open(EmployeeComponent,dialogConfig);
-    }
-    */
 
-  /*
-  onEdit(row){
-    this.service.populateForm(row);
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.width = "60%";
-    this.dialog.open(EmployeeComponent,dialogConfig);
+  onCreate() {
+    /* this.service.initializeFormGroup();
+     const dialogConfig = new MatDialogConfig();
+     dialogConfig.disableClose = true;
+     dialogConfig.autoFocus = true;
+     dialogConfig.width = "60%";
+     this.dialog.open(EmployeeComponent,dialogConfig);
+     */
   }
-  */
+
+
+
+  onEdit(row) {
+    console.log(row['idEmpresa']);
+    this.route.navigate(['/empresa/' + row['idEmpresa']]);
+
+    /* this.service.populateForm(row);
+     const dialogConfig = new MatDialogConfig();
+     dialogConfig.disableClose = true;
+     dialogConfig.autoFocus = true;
+     dialogConfig.width = "60%";
+     this.dialog.open(EmployeeComponent,dialogConfig)*/
+  }
+
 }

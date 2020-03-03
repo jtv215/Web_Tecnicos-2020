@@ -10,9 +10,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SigninComponent implements OnInit {
 
-  user = {}
-  mostrar=false;
-  status='';
+  user = {
+    'email': '',
+    'password': ''
+  }
+
+  mostrar = false;
+  status = '';
 
   constructor(
     private authService: AuthService,
@@ -22,12 +26,12 @@ export class SigninComponent implements OnInit {
   ngOnInit() {
   }
 
-  activarError(status){    
+  activarError(status) {
 
-    if(status=='ERROR'){
-      this.mostrar=true;
-    }else{
-      this.mostrar=false;
+    if (status == 'ERROR') {
+      this.mostrar = true;
+    } else {
+      this.mostrar = false;
     }
   }
 
@@ -38,38 +42,28 @@ export class SigninComponent implements OnInit {
         result => {
           //console.log(result.body)
           //console.log(result.headers.get('Authorization'));       
-          if(result.body['status']== 'Success'){
-            
-            localStorage.setItem('token',result.headers.get('Authorization'));
-            localStorage.setItem('id',result.body['message']['id']);
-            localStorage.setItem('email',result.body['message']['email']);
+          if (result.body['status'] == 'Success') {
+
+            localStorage.setItem('token', result.headers.get('Authorization'));
+            localStorage.setItem('id', result.body['data']['id']);
+            localStorage.setItem('email', result.body['data']['email']);
+
             this.route.navigate(['/principal'])
-          }else{        
+
+          } else {
             this.activarError(result.body['status'])
           }
-          
+
         },
         error => {
           console.log(<any>error)
         }
       )
-          
-       
-         
-          
-     
+
+
+
+
+
 
   }
 }
-
-
-/*
-(data: HttpResponse<any>) => {
-  console.log(data['code']);
-
-  console.log(data.headers);
-
-  console.log(data.headers.get('Content-Type'));
-  console.log(data.headers.get('Authorization'));
-
-  */

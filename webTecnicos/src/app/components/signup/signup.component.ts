@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { AuthService } from './../../services/auth.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-signup',
@@ -9,10 +9,14 @@ import { Component, OnInit } from '@angular/core';
   providers: [AuthService] //
 })
 export class SignupComponent implements OnInit {
-  //se añade los campos de forma automatica, y no hace falta poner nada, ya esta ng...
-  user = {}
-  mostrar=false;
-  status='';
+  user = {
+    'email': '',
+    'password': ''
+  }
+  mostrar = false;
+  code: string;
+  message: string;
+
   //importar servicio y pasar por el contrucor para instancear y poder usarlo
   constructor(
     private authService: AuthService,
@@ -21,22 +25,20 @@ export class SignupComponent implements OnInit {
   ngOnInit() {
   }
 
-  activarError(status){    
-    if(status=='ERROR'){
-      this.mostrar=true;
-    }else{
-      this.mostrar=false;
-    }
-  }
-
   signUp() {
     this.authService.registrarse(this.user)
       .subscribe(
         result => {
-          //console.log(result)     
-          this.activarError(result['status'])
+          this.code = result['code'];
+          if (result['code'] == 200) {
+            this.message = "Se ha registrado correctamente";
+            this.mostrar = true;
+          } else {
+            this.message = "El correo ya existe*";
+            this.mostrar = true;
+          }
 
-          
+
         },
         err => {
           var errorMensaje = <any>err;

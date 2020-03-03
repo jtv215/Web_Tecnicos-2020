@@ -1,0 +1,25 @@
+<div class="card">
+
+  <div class="card-body">
+    <form #idFormulario="ngForm" (ngSubmit)="onSubmit(idFormulario)">
+
+      <div class="form-group">
+        <input type="text" [(ngModel)]="comentario" name="comentario" class="form-control"
+          placeholder="Añade un comentario" required autofocus autocomplete="off">
+      </div>
+
+      <div>
+        <button type="submit" class="btn btn-outline-primary btn float-right margin-left"
+          [disabled]="!idFormulario.form.valid">
+          Comentar
+        </button>
+        <button type="reset" class="btn btn-outline-secondary  btn float-right margin-left">
+          CANCELAR
+        </button>
+      </div>
+    </form>
+
+  </div>
+</div>
+
+<app-mensaje [id]="id"  [mensajeAux]="mensaje"  [cargarLista]="state.asObservable()"></app-mensaje>

@@ -25,7 +25,8 @@
           </button>
       
             <div *ngIf="mostrar">
-            <p class="text-danger"> {{message}} El correo ya existe*</p>
+            <p *ngIf="code==200" class="text-success"> {{message}}</p>
+            <p *ngIf="code!=200" class="text-danger"> {{message}}</p>
             </div>
             
         </form>

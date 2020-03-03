@@ -1,0 +1,22 @@
+.colorFecha{
+    color: rgb(96, 96, 96);
+}
+
+.texto{
+    color:rgb(13, 13, 13);
+    font-size: 14px;
+    line-height: 1rem;
+    margin-bottom: 15px;
+}
+
+.circular--square {
+    border-radius: 50%;
+  }
+
+.circular--square {
+    border-top-left-radius: 50% 50%;
+    border-top-right-radius: 50% 50%;
+    border-bottom-right-radius: 50% 50%;
+    border-bottom-left-radius: 50% 50%;
+  }
+   

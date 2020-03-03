@@ -1,0 +1,32 @@
+<div  style="margin-top: 20px;">
+  <div>
+    <hr>
+    <h4 class="text-center p-t-3">Lista de Comentarios</h4>
+  </div>
+  <div *ngIf="!mensajeList">
+    <p>No hay mensajes</p>
+  </div>
+
+  <div *ngIf="mensajeList">
+    <div *ngFor="let item of mensajeList">
+
+      <div class="d-flex bd-highlight mb-3 flex-wrap">
+        <div class="p-2 bd-highlight ">
+          <img src="assets/img/usuario.png" style="width: 50px; height: 40px;" />
+        </div>
+
+        <div class="p-2 bd-highlight">
+          <strong> {{item.encargadoLLamar}}</strong> <span class="colorFecha"> {{item.fechaHora}} </span> <br>
+          <div class="texto"> {{item.mensaje}} </div>
+        </div>
+
+        <div class="ml-auto p-2 bd-highlight">
+          <button mat-icon-button color="warn" (click)="onDelete(item.idMensaje)">
+            <mat-icon>delete_outline</mat-icon>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

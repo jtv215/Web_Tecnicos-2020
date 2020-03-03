@@ -1,3 +1,4 @@
+import { GLOBAL } from './global';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -16,18 +17,18 @@ export class EmpresaService {
     public http: HttpClient,
     private router: Router
   ) {
-    this.url = 'http://localhost:80/tecnicos/api/index.php/';
+    this.url = GLOBAL.url;
   }
 
   getPrueba() {
     return "Probando servicio Empresa";
   }
 
-  getEmpresa() {
-    return this.http.get(this.url + 'empresa');
+  getEmpresa(id) {
+    return this.http.get(this.url + 'empresa/'+id);
   }
 
-  getEmpresdatosMin() {
+  getEmpresaDatosMin() {
     return this.http.get(this.url + 'empresa/datosmin');
   }
 
@@ -37,6 +38,10 @@ export class EmpresaService {
 
   getEmpresaFiltro(filtro) {
     return this.http.post<any>(this.url + 'empresa/filtro', filtro, httpOptions);
+  }
+
+  deleteEmpresa(id) {
+    return this.http.delete<any>(this.url + 'empresa/'+id);
   }
 
 }

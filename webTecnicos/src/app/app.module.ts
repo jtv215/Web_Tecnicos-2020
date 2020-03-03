@@ -1,3 +1,4 @@
+import { CopyClipboardModule } from './services/copy-clipboard.module';
 import { MaterialModule } from './material/material.module';
 import { AuthGuard } from './services/auth.guard';
 import { TokenInterceptorService } from './services/token-interceptor.service';
@@ -18,6 +19,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PrincipalComponent } from './components/principal/principal.component';
 import { FormularioComponent } from './components/formulario/formulario.component';
 import { ListEmpresaComponent } from './components/list-empresa/list-empresa.component';
+import { DetailEmpresaComponent } from './components/detail-empresa/detail-empresa.component';
+import { MensajeListComponent } from './components/mensaje-list/mensaje-list.component';
+import { MensajeComponent } from './components/mensaje/mensaje.component';
+
+//copy
 
 @NgModule({
   declarations: [
@@ -29,6 +35,9 @@ import { ListEmpresaComponent } from './components/list-empresa/list-empresa.com
     PrincipalComponent,
     FormularioComponent,
     ListEmpresaComponent,
+    DetailEmpresaComponent,
+    MensajeListComponent,
+    MensajeComponent,
   ],
   imports: [
     BrowserModule,AppRoutingModule,
@@ -37,6 +46,7 @@ import { ListEmpresaComponent } from './components/list-empresa/list-empresa.com
     HttpClientModule,//servicios http
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    CopyClipboardModule,
   ],
   providers: [ AuthGuard,
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true }],

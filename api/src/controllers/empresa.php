@@ -56,16 +56,17 @@ $app->get('/empresa/{idEmpresa}', function (Request $request, Response $response
         //get Telefono
         $idempresa = $data['idEmpresa'];
         $telefono = getTelefono($idEmpresa);
-        $mensaje = getMensaje($idEmpresa);
+        //$mensaje = getMensaje($idEmpresa);
 
         $response = array(
             'status' => 'Success',
             'code' => 200,
             'data' => $data,
-            'telefono' => $telefono,
-            'mensaje' => $mensaje
+            'telefono' => $telefono
+            //'mensaje' => $mensaje
 
         );
+       
         return json_encode($response);
     }
 });

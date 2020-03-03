@@ -1,0 +1,63 @@
+<div *ngIf="!empresa">
+  <p>Cargando datos de la Empresa</p>
+</div>
+
+<div *ngIf="empresa">
+  <div class="card">
+
+    <div class="card-header text-center">
+      <h3>{{empresa.nombreEmpresa}}</h3>
+    </div>
+
+    <div class="card-body">
+      <div class="d-flex justify-content-between flex-wrap">
+        <div>
+          <strong> Nombre Empresa:</strong> {{empresa.nombreEmpresa}} <br>
+          <strong> Nombre Tecnico:</strong> {{empresa.nombreTecnico}} <br>
+          <strong> Especialidad:</strong> {{empresa.especialidad}} <br>
+          <strong> Dirección:</strong> {{empresa.direccion}} <br>
+          <strong> Email:</strong> {{empresa.email}} <br>
+          <strong> Web:</strong> <a href="{{empresa.web}}" title="{{empresa.web}}"> Enlace web</a><br>
+          <strong> Horario:</strong> {{empresa.horario}} <br>
+        </div>
+
+        <div>
+          <strong> Contratado:</strong> {{empresa.contratado}} <br>
+          <strong> Publicado en:</strong> <a href="{{empresa.webFound}}" title="{{empresa.webFound}}">
+            Enlace web</a><br>
+          <strong> Interesado:</strong> {{empresa.interesado}} <br>
+          <strong> Comentario:</strong> {{empresa.comentario}} <br>
+          <strong> Ocultar:</strong> {{empresa.ocultar}} <br>
+        </div>
+
+        <div>
+          <div *ngFor="let item of telefonos; let i = index">
+            <strong>{{i + 1}} {{item.localidad}}</strong> - {{item.telefono}}
+            <input type="button" value="Copiar" class="button"
+            [copy-clipboard]="stamp(item.telefono)" >      
+
+          </div>
+
+          <p>
+           
+            
+          </p>
+
+
+        </div>
+
+      </div>
+
+      <div >
+        <strong> Especificacion:</strong> {{empresa.especificacion}} <br>
+      </div>
+
+    </div>
+
+
+
+  </div>
+
+</div>
+
+<app-mensaje-list></app-mensaje-list>

@@ -4,6 +4,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTableModule} from '@angular/material/table';
 import {MatSelectModule} from '@angular/material/select';
 import * as Material from "@angular/material";
+import {MatListModule} from '@angular/material/list';
 
 import {MatButtonModule,
     MatPaginatorModule,    
@@ -38,6 +39,8 @@ import {MatButtonModule,
     Material.MatPaginatorModule,
     Material.MatSortModule,
     Material.MatDialogModule,
+    MatListModule,
+    
   ],
   exports: [
     MatButtonModule,
@@ -63,6 +66,9 @@ import {MatButtonModule,
     Material.MatPaginatorModule,
     Material.MatSortModule,
     Material.MatDialogModule,
-  ]
+    MatListModule,
+    
+    
+  ],
 })
 export class MaterialModule { }

@@ -46,6 +46,8 @@ function errorResponse($response, $messageError)
         'code' => 404,
         'data' => $messageError
     );
+    
+  
     return json_encode($response);
 }
 

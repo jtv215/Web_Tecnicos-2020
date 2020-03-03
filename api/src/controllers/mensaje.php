@@ -39,7 +39,7 @@ $app->post('/mensaje', function (Request $request, Response $response, array $ar
     $idEmpresa = $data['idEmpresa'];
     $fechaHora = $data['fechaHora'];
     $mensaje = $data['mensaje'];
-    $encargadoLlamar = $data['encargadoLlamar'];
+    $encargadoLlamar = $data['encargadoLLamar'];
 
     $sql = "INSERT INTO mensaje (idEmpresa, fechaHora, mensaje, encargadoLlamar) 
     values ('" . $idEmpresa . "', '" . $fechaHora . "', '" . $mensaje . "', '" . $encargadoLlamar . "')";
@@ -76,10 +76,8 @@ $app->put('/mensaje', function (Request $request, Response $response, array $arg
 
 
 //* Borrar un solo mesnaje con el idMensaje *//  ok
-$app->delete('/mensaje', function (Request $request, Response $response) {
-
-    $data = $request->getParsedBody();
-    $idMensaje = $data['idMensaje'];
+$app->delete('/mensaje/{idMensaje}', function (Request $request, Response $response) {
+    $idMensaje = $request->getAttribute('idMensaje');    
 
     $sql = "DELETE FROM mensaje WHERE idMensaje = '" . $idMensaje . "' ";
     $stmt = executeQuery($sql);

@@ -1,3 +1,4 @@
+import { DetailEmpresaComponent } from './components/detail-empresa/detail-empresa.component';
 import { FormularioComponent } from './components/formulario/formulario.component';
 import { CanActivate } from '@angular/router/src/utils/preactivation';
 import { AuthGuard } from './services/auth.guard';
@@ -9,7 +10,6 @@ import { AppComponent } from './app.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ListEmpresaComponent } from './components/list-empresa/list-empresa.component';
-
 
 const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' }, //pag inicio
@@ -25,10 +25,14 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'formulario', component: FormularioComponent,
+    path: 'empresas', component: FormularioComponent,
     canActivate: [AuthGuard]
   },
-  { path: '**', component: AppComponent }//cuando hay algun fallo
+  {
+    path: 'empresa/:id', component: DetailEmpresaComponent,
+    canActivate: [AuthGuard]
+  },
+  { path: '**', component: HomeComponent }//cuando hay algun fallo
 ];
 
 @NgModule({

@@ -6,9 +6,9 @@
   -->
   <div class="card-body">
     <form (ngSubmit)="onSubmit()">
-      <div class="row">
+      <div class="d-flex justify-content-between flex-wrap">
 
-        <div class="col-xs-12 col-sm-4">
+        <div >
           <mat-form-field>
             <mat-label>Provincia</mat-label>
             <mat-select [(value)]="empresaFiltro.provincia" name="provincia" [(ngModel)]="empresaFiltro.provincia">
@@ -19,7 +19,7 @@
           </mat-form-field>
         </div>
 
-        <div class="col-xs-12 col-sm-4">
+        <div >
           <mat-form-field>
             <mat-label>Especialidad</mat-label>
             <mat-select [(value)]="empresaFiltro.especialidad" name="especialidad"
@@ -31,7 +31,7 @@
           </mat-form-field>
         </div>
 
-        <div class="col-xs-12 col-sm-4">
+        <div >
           <mat-form-field>
             <mat-label>Contratado</mat-label>
             <mat-select [(value)]="empresaFiltro.contratado" name="contratado" [(ngModel)]="empresaFiltro.contratado">

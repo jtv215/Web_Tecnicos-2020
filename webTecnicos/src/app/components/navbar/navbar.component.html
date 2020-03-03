@@ -20,30 +20,32 @@
                     <a class="nav-link" routerLink="/principal" routerLinkActivate="active">Principal</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/formulario" routerLinkActivate="active">Formulario</a>
+                    <a class="nav-link" routerLink="/empresas" routerLinkActivate="active">Empresas</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/listaEmpresa" routerLinkActivate="active">Lista Empresa</a>
-                </li>
+                
             </ng-template>
                
             </ul>
 
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav ml-auto " >
                 <ng-container *ngIf="!authService.loggedIn(); else loggedIn">
-                    <li class="nav-item">
-                        <a class="nav-link" routerLink="/signup" routerLinkActivate="active">Registrarse</a>
+                    <li class="nav-item" >
+                        <a class="nav-link" routerLink="/signup"  routerLinkActivate="active">
+                        <mat-icon class="material-icons">person_add</mat-icon>Registrarse</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" routerLink="/signin" routerLinkActivate="active">login</a>
+                        <a class="nav-link" routerLink="/signin"  routerLinkActivate="active"> 
+                        <mat-icon class="material-icons"> person</mat-icon>Entrar</a>
                     </li>
                 </ng-container>
 
                 <ng-template #loggedIn>
                     <li class="nav-item">
-                        <a class="nav-link" style="cursor: pointer;" (click)="authService.outSesion()" >Cerrar
-                            Sessión</a>
+                        <a class="nav-link" style="cursor: pointer;" (click)="authService.outSesion()" >
+                        <mat-icon class="material-icons ">power_settings_new</mat-icon>Cerrar Sessión</a>
                     </li>
+
+                   
                 </ng-template>
 
             </ul>
