@@ -4,9 +4,14 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 function conexion() {
     $dbhost="localhost";
+    $dbname="id12793341_bd_lineablanca";
+    $dbuser="id12793341_bd_lineablanca";
+    $dbpass="rootroot";
+    /*
     $dbuser="root";
     $dbpass="root";
     $dbname="bd_lineablanca"; 
+    */
     //$dbname="bd_prueba"; 
 
     try {

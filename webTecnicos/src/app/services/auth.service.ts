@@ -1,3 +1,4 @@
+import { GLOBAL } from './global';
 import { Router } from '@angular/router';
 import { Injectable, ErrorHandler } from '@angular/core';
 
@@ -12,13 +13,14 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AuthService {
-
-  private url = 'http://localhost:80/tecnicos/api/index.php/';
-
+  public url: string;
   constructor(
     public http: HttpClient,
     private router: Router
-  ) { }
+  ) { 
+    this.url = GLOBAL.url;
+
+  }
 
   registrarse(user) {
     return this.http.post<any>(this.url + 'usuario', user)
