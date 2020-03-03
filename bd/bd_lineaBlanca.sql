@@ -1,8 +1,11 @@
+CREATE DATABASE  IF NOT EXISTS `bd_lineablanca` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `bd_lineablanca`;
 -- MySQL dump 10.13  Distrib 8.0.18, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: bd_lineablanca
 -- ------------------------------------------------------
 -- Server version	8.0.18
+
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -20,28 +23,28 @@
 
 DROP TABLE IF EXISTS `empresa`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `empresa` (
   `idEmpresa` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `provincia` varchar(45) DEFAULT NULL,
-  `nombreEmpresa` varchar(120) DEFAULT NULL,
-  `nombreTecnico` varchar(120) DEFAULT NULL,
-  `especialidad` char(20) DEFAULT NULL,
-  `direccion` varchar(120) DEFAULT NULL,
-  `email` varchar(100) DEFAULT NULL,
-  `web` varchar(200) DEFAULT NULL,
-  `horario` varchar(120) DEFAULT NULL,
-  `especificacion` varchar(1000) DEFAULT NULL,
-  `contratado` char(2) DEFAULT NULL,
-  `repetido` char(2) DEFAULT NULL,
-  `webFound` varchar(200) DEFAULT NULL,
-  `interesado` varchar(15) DEFAULT NULL,
-  `comentario` varchar(1000) DEFAULT NULL,
+  `provincia` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nombreEmpresa` varchar(120) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nombreTecnico` varchar(120) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `especialidad` char(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `direccion` varchar(120) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `web` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `horario` varchar(120) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `especificacion` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `contratado` char(2) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `repetido` char(2) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `webFound` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `interesado` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `comentario` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `creacion` datetime DEFAULT NULL,
-  `ocultar` char(2) DEFAULT NULL,
+  `ocultar` char(2) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`idEmpresa`),
   UNIQUE KEY `ididempresa_UNIQUE` (`idEmpresa`)
-) ENGINE=InnoDB AUTO_INCREMENT=162 DEFAULT CHARSET=utf8 COLLATE=utf8_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=162 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -60,18 +63,18 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `mensaje`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `mensaje` (
   `idMensaje` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `idEmpresa` int(10) unsigned DEFAULT NULL,
   `fechaHora` datetime DEFAULT NULL,
-  `mensaje` varchar(1000) DEFAULT NULL,
-  `encargadoLLamar` varchar(45) DEFAULT NULL,
+  `mensaje` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `encargadoLLamar` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`idMensaje`),
   UNIQUE KEY `idContestacion_UNIQUE` (`idMensaje`),
   KEY `idEmpresa_idContestacion_idx` (`idEmpresa`),
   CONSTRAINT `FK_idEmpresa_mensaje` FOREIGN KEY (`idEmpresa`) REFERENCES `empresa` (`idEmpresa`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8 COLLATE=utf8_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -90,17 +93,17 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `telefono`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `telefono` (
   `idTelefono` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `idEmpresa` int(10) unsigned DEFAULT NULL,
-  `localidad` varchar(100) DEFAULT NULL,
-  `telefono` varchar(45) DEFAULT NULL,
+  `localidad` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `telefono` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`idTelefono`),
   UNIQUE KEY `idLocal_UNIQUE` (`idTelefono`),
   KEY `idEmpresa_idLocal_idx` (`idEmpresa`),
   CONSTRAINT `FK_idEmpresa_telefono` FOREIGN KEY (`idEmpresa`) REFERENCES `empresa` (`idEmpresa`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=175 DEFAULT CHARSET=utf8 COLLATE=utf8_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=175 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -119,17 +122,17 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `usuario`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `usuario` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(200) NOT NULL,
-  `email` varchar(200) NOT NULL,
-  `password` varchar(200) NOT NULL,
-  `token` varchar(1000) NOT NULL,
+  `nombre` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=146 DEFAULT CHARSET=utf8 COLLATE=utf8_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=146 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -151,4 +154,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-03-03 13:15:15
+-- Dump completed on 2020-03-03 16:24:30
