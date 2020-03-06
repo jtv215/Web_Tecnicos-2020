@@ -66,7 +66,7 @@ $app->get('/empresa/{idEmpresa}', function (Request $request, Response $response
             //'mensaje' => $mensaje
 
         );
-       
+
         return json_encode($response);
     }
 });
@@ -74,7 +74,8 @@ $app->get('/empresa/{idEmpresa}', function (Request $request, Response $response
 //* Add empresa *//
 $addEmpresa = "";
 $app->post('/empresa', function (Request $request, Response $response) {
-    $data = $request->getParsedBody();
+    $json = $request->getBody();
+    $data = json_decode($json, true);
     $telefono = $data['telefono'];
     $localidad = strtoupper($data['localidad']);
 
@@ -139,7 +140,8 @@ $app->post('/empresa', function (Request $request, Response $response) {
 $updateEmpresa = "";
 $app->post('/actualizarEmpresa', function (Request $request, Response $response, array $args) {
 
-    $data = $request->getParsedBody();
+    $json = $request->getBody();
+    $data = json_decode($json, true);
 
     $idEmpresa = $data['idEmpresa'];
     $provincia = strtoupper($data['provincia']);
@@ -207,7 +209,8 @@ $app->delete('/empresa/{idEmpresa}', function (Request $request, Response $respo
 function comprobarTelefono($request, $response)
 {
 
-    $data = $request->getParsedBody();
+    $json = $request->getBody();
+    $data = json_decode($json, true);
     $telefono = $data['telefono'];
 
     $sql = "SELECT idEmpresa FROM telefono WHERE telefono = '" . $telefono . "' ";
@@ -273,7 +276,8 @@ function comprobarLocalidad($idEmpresa, $localidad, $telefono)
 //* comprueba el nombre de la empresa y que me devuelva el ID de la empresa*// parece que bien
 function compruebaNombreEmpresa($request)
 {
-    $data = $request->getParsedBody();
+    $json = $request->getBody();
+    $data = json_decode($json, true);
     $nombreEmpresa = $data['nombreEmpresa'];
 
     $sql = "SELECT idEmpresa FROM empresa WHERE nombreEmpresa = '" . $nombreEmpresa . "' ";
@@ -306,8 +310,9 @@ function compruebaNombreEmpresa($request)
 function addEmpresa($request, $response)
 {
 
-    $data = $request->getParsedBody();
-    /*tabla empresa*/
+    $json = $request->getBody();
+    $data = json_decode($json, true);
+     /*tabla empresa*/
     $provincia = strtoupper($data['provincia']);
     $nombreEmpresa = $data['nombreEmpresa'];
     $nombreTecnico = $data['nombreTecnico'];
@@ -387,22 +392,22 @@ function addLocalidadTelefono2($idEmpresa, $telefono, $localidad)
 //************* Funciones ************************ */
 
 
-function getMensaje($idEmpresa){
+function getMensaje($idEmpresa)
+{
     $db = conexion();
-    $sql= "SELECT * FROM mensaje WHERE idEmpresa = $idEmpresa";
+    $sql = "SELECT * FROM mensaje WHERE idEmpresa = $idEmpresa";
     $stmt = $db->prepare($sql);
     $stmt->execute();
     $count = $stmt->rowCount(); //Devuelve el nº de filas.
 
-    if (!$stmt){
+    if (!$stmt) {
         return 'Error al ejecutar la consulta';
-    }else{  
-        if($count==0){           
+    } else {
+        if ($count == 0) {
             return 'No hay mensaje';
-        }else{  
+        } else {
             $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $data;
         }
     }
 }
-

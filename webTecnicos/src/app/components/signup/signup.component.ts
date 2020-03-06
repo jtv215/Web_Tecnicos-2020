@@ -29,23 +29,15 @@ export class SignupComponent implements OnInit {
     this.authService.registrarse(this.user)
       .subscribe(
         result => {
-          this.code = result['code'];
-          if (result['code'] == 200) {
+          console.log(result.body['code'])
+          if (this.code == '200') {
             this.message = "Se ha registrado correctamente";
             this.mostrar = true;
           } else {
             this.message = "El correo ya existe*";
             this.mostrar = true;
           }
-
-
-        },
-        err => {
-          var errorMensaje = <any>err;
-          console.log(errorMensaje)
-        }
-      )
-
+        })
   }
 
 }

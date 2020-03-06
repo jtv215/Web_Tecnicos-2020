@@ -42,7 +42,9 @@ $app->get('/usuario/{idUsario}', function (Request $request, Response $response)
 //* Añadir usuario *//
 $addUsuario = "";
 $app->post('/usuario', function (Request $request, Response $response) {
-    $data = $request->getParsedBody();
+    $json = $request->getBody();
+    $data = json_decode($json, true);
+  
 
     $nombre = "";
     $email = $data['email'];
@@ -72,7 +74,9 @@ $app->post('/usuario', function (Request $request, Response $response) {
 $updateUsuario = "";
 $app->put('/usuario/{idUsuario}', function (Request $request, Response $response) {
     $idUsuario = $request->getAttribute('idUsuario');
-    $data = $request->getParsedBody();
+    $json = $request->getBody();
+    $data = json_decode($json, true);
+    
     $nombre = $data['nombre'];
     $password = $data['password'];
 

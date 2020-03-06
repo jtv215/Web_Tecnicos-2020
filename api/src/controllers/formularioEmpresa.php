@@ -11,7 +11,8 @@ require_once 'conexion.php';
 $getFilterEmpresa = "";
 $app->post('/empresa/filtro', function (Request $request, Response $response) {
 
-    $data = $request->getParsedBody();
+    $json = $request->getBody();
+    $data = json_decode($json, true);
     $provincia = $data['provincia'];
     $especialidad = $data['especialidad'];
     $contratado = $data['contratado'];
@@ -55,9 +56,4 @@ $app->get('/empresa/datosmin', function (Request $request, Response $response) {
 
     $messageError = 'No hay ninguna empresa en la base de datos';
     return responseObject($response, $stmt, $messageError);
-
-    
 });
-
-
-

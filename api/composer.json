@@ -1,8 +1,8 @@
 {
   "_comment": "composer update -> añade la librea y luego instala el paquete",
-    "require": {
-      "slim/slim": "^3.0",
-      "tuupola/slim-jwt-auth": "^3.4"
-    }
-    
+  "require": {
+    "slim/slim": "^3.0",
+    "tuupola/slim-jwt-auth": "^3.4",
+    "tuupola/cors-middleware": "^1.1"
+  }
 }

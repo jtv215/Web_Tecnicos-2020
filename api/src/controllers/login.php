@@ -6,9 +6,12 @@ use \Firebase\JWT\JWT;
 
 
 //* Se realiza un login *//   ok
+$login = "";
 $app->post('/login', function (Request $request, Response $response) {
     $db = conexion();
-    $input = $request->getParsedBody();
+    $json = $request->getBody();
+    $input = json_decode($json, true);
+
     $sql = "SELECT * FROM usuario WHERE email= :email";
     $sth = $db->prepare($sql);
     $sth->bindParam("email", $input['email']);
@@ -58,6 +61,7 @@ $app->post('/login', function (Request $request, Response $response) {
 });
 
 //* Se prueba un token y te devuelve coches *//   ok
+$getCoches = "";
 $app->get('/coches', function (Request $request, Response $response) {
     $esValido = verificarToken($request);
 
@@ -71,7 +75,7 @@ $app->get('/coches', function (Request $request, Response $response) {
     }
 });
 
-
+$pruebalogin = "";
 $app->get('/pruebalogin', function ($request, $response, $args) {
     header("token:" . "123456");
     $prueba = "funciona API";

@@ -30,8 +30,9 @@ $app->get('/telefono/{idEmpresa}', function (Request $request, Response $respons
 
 //* Añade una localidad y su telefono *//   ok
 $app->POST('/telefono', function (Request $request, Response $response, array $args) {
-    $data = $request->getParsedBody();
-
+    $json = $request->getBody();
+    $data = json_decode($json, true);
+    
     $idEmpresa = $data['idEmpresa'];
     $localidad = strtoupper($data['localidad']); //convierte a mayúsculas
     $telefono = $data['telefono'];

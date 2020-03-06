@@ -1,10 +1,13 @@
 import { GLOBAL } from './global';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 const httpOptions = {
   observe: 'response' as 'response',
+  headers: new HttpHeaders({
+    'Content-Type': 'text/plain',
+  })
 };
 @Injectable({
   providedIn: 'root'
@@ -13,9 +16,7 @@ export class MensajeService {
   public url: string;
 
   constructor(
-    public http: HttpClient,
-    private router: Router
-  ) {
+    public http: HttpClient) {
     this.url = GLOBAL.url;
   }
 
@@ -24,15 +25,15 @@ export class MensajeService {
   }
 
   getAllMensaje(id) {
-    return this.http.get(this.url + 'mensaje/'+id);
+    return this.http.get(this.url + 'mensaje/' + id);
   }
 
   addMensaje(datos) {
-    return this.http.post<any>(this.url + 'mensaje', datos, httpOptions);
+    return this.http.post(this.url + 'mensaje', datos, httpOptions);
   }
 
   deleteMensaje(id) {
-    return this.http.delete<any>(this.url + 'mensaje/'+id);
+    return this.http.delete(this.url + 'mensaje/' + id);
   }
 
 }

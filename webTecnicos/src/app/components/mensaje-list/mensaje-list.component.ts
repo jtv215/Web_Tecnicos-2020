@@ -62,6 +62,9 @@ export class MensajeListComponent implements OnInit {
             alert("Error al añadir mensaje");
           }
 //       
+      },
+      error => {
+        console.log(<any>error)
       }
     );
   }

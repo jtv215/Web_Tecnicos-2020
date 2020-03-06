@@ -1,10 +1,12 @@
 import { GLOBAL } from './global';
-import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 const httpOptions = {
   observe: 'response' as 'response',
+  headers: new HttpHeaders({
+    'Content-Type': 'text/plain',
+  })
 };
 
 @Injectable({
@@ -14,9 +16,7 @@ export class EmpresaService {
   public url: string;
 
   constructor(
-    public http: HttpClient,
-    private router: Router
-  ) {
+    public http: HttpClient ) {
     this.url = GLOBAL.url;
   }
 
@@ -37,11 +37,11 @@ export class EmpresaService {
   }
 
   getEmpresaFiltro(filtro) {
-    return this.http.post<any>(this.url + 'empresa/filtro', filtro, httpOptions);
+    return this.http.post(this.url + 'empresa/filtro', filtro, httpOptions);
   }
 
   deleteEmpresa(id) {
-    return this.http.delete<any>(this.url + 'empresa/'+id);
+    return this.http.delete(this.url + 'empresa/'+id);
   }
 
 }

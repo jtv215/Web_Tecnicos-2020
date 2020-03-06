@@ -35,7 +35,8 @@ $app->get('/mensaje/{idEmpresa}', function (Request $request, Response $response
 $addMensaje= "";
 $app->post('/mensaje', function (Request $request, Response $response, array $args) {
 
-    $data = $request->getParsedBody();
+    $json = $request->getBody();
+    $data = json_decode($json, true);
     $idEmpresa = $data['idEmpresa'];
     $fechaHora = $data['fechaHora'];
     $mensaje = $data['mensaje'];
@@ -55,7 +56,8 @@ $app->post('/mensaje', function (Request $request, Response $response, array $ar
 $updateMensaje= "";
 $app->put('/mensaje', function (Request $request, Response $response, array $args) {
 
-    $data = $request->getParsedBody();
+    $json = $request->getBody();
+    $data = json_decode($json, true);
     $idMensaje = $data['idMensaje'];
     $fechaHora = $data['fechaHora'];
     $mensaje = $data['mensaje'];
