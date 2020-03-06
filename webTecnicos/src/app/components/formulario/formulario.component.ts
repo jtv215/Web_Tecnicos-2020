@@ -39,7 +39,7 @@ export class FormularioComponent implements OnInit {
     //console.log(this.empresaFiltro);
     this.empresaService.getEmpresaFiltro(this.empresaFiltro).subscribe(
       result => {
-        console.log(result.body);
+        //console.log(result.body);
         if(result.body['status']== "ERROR"){
           //console.log(result.body['status']);
           this.data = [];

@@ -29,7 +29,8 @@ export class SignupComponent implements OnInit {
     this.authService.registrarse(this.user)
       .subscribe(
         result => {
-          console.log(result.body['code'])
+          this.code = result.body['code'];
+          //console.log(result.body['code'])
           if (this.code == '200') {
             this.message = "Se ha registrado correctamente";
             this.mostrar = true;
