@@ -41,7 +41,12 @@ export class EmpresaService {
   }
 
   deleteEmpresa(id) {
-    return this.http.delete(this.url + 'empresa/'+id);
+    let aid= {"id": id};
+    return this.http.post(this.url + 'delete/empresa',aid,httpOptions);
+  }
+
+  addEmpresa(empresa) {
+    return this.http.post(this.url + 'empresa', empresa, httpOptions);
   }
 
 }

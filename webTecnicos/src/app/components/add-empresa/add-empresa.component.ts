@@ -10,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
 export class AddEmpresaComponent implements OnInit {
   especialidades: string[] = ['Electrodomésticos', 'Funeraria'];
   empresa: Empresa;
+  code: string;
 
   constructor(
     private empresaService: EmpresaService
@@ -24,4 +25,21 @@ export class AddEmpresaComponent implements OnInit {
   ngOnInit() {
   }
 
+
+  onSubmit() {
+    console.log(this.empresa);
+
+    this.empresaService.addEmpresa(this.empresa).subscribe(
+      result => {
+        this.code = result.body['code'];
+        if (this.code == '200') {
+          console.log(result.body['data'])
+
+        } else {
+          console.log(result.body['data'])
+
+        }
+
+      })
+  }
 }

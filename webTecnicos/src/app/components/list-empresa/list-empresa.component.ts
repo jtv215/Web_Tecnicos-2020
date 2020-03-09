@@ -30,7 +30,7 @@ export class ListEmpresaComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   searchKey: string;
-  
+  code: string;
 
   ngOnInit() {
     this.paginator._intl.itemsPerPageLabel = 'Por página.';
@@ -75,7 +75,9 @@ export class ListEmpresaComponent implements OnInit {
     if (confirm('¿Estas seguro de eliminar?')) {
       this.empresaService.deleteEmpresa(id).subscribe(
         result => {
-          if (result['code'] == 200) {
+          this.code = result.body['code'];
+
+          if (this.code == '200') {
             this.cargarTablaWithService()
           } else {
             alert("Error al borrar mensaje");

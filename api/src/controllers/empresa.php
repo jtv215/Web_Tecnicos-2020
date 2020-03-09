@@ -189,8 +189,12 @@ $app->post('/actualizarEmpresa', function (Request $request, Response $response,
 
 //* Borrar empresa y sus tablas en cascada pasandole por parámetros un Id de empresa*//  ok
 $deleteEmpresa="";
-$app->post('/delete/empresa/{idEmpresa}', function (Request $request, Response $response) {
-    $idEmpresa = $request->getAttribute('idEmpresa');
+$app->post('/delete/empresa', function (Request $request, Response $response) {
+  //  $idEmpresa = $request->getAttribute('idEmpresa');
+
+    $json = $request->getBody();
+    $data = json_decode($json, true);
+    $idEmpresa = $data['id'];
 
     $sql = "DELETE FROM empresa WHERE idEmpresa = '" . $idEmpresa . "' ";
     $stmt = executeQuery($sql);
