@@ -20,6 +20,10 @@ export class AddEmpresaComponent implements OnInit {
       "", "", "", "", "",
       "", "", "", "", "",
       "", "")
+      this.empresa['contratado'] = "no";
+      this.empresa['repetido'] = "no";
+      this.empresa['ocultar'] = "no";
+
   }
 
   ngOnInit() {
@@ -27,16 +31,17 @@ export class AddEmpresaComponent implements OnInit {
 
 
   onSubmit() {
-    console.log(this.empresa);
+  //  console.log(this.empresa);
 
     this.empresaService.addEmpresa(this.empresa).subscribe(
       result => {
         this.code = result.body['code'];
         if (this.code == '200') {
-          console.log(result.body['data'])
+        //  console.log(result.body['data'])
 
         } else {
-          console.log(result.body['data'])
+          alert("Error al borrar mensaje");
+          //console.log(result.body['data'])
 
         }
 
