@@ -1,3 +1,4 @@
+import { AddEmpresaComponent } from './components/add-empresa/add-empresa.component';
 import { DetailEmpresaComponent } from './components/detail-empresa/detail-empresa.component';
 import { FormularioComponent } from './components/formulario/formulario.component';
 import { CanActivate } from '@angular/router/src/utils/preactivation';
@@ -32,7 +33,15 @@ const routes: Routes = [
     path: 'empresa/:id', component: DetailEmpresaComponent,
     canActivate: [AuthGuard]
   },
+  {
+    path: 'addempresa', component: AddEmpresaComponent,
+    canActivate: [AuthGuard]
+  },
+
   { path: '**', component: HomeComponent }//cuando hay algun fallo
+
+
+
 ];
 
 @NgModule({

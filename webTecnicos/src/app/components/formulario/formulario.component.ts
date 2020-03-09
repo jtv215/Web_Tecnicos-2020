@@ -15,7 +15,7 @@ export class FormularioComponent implements OnInit {
 
   empresaFiltro: EmpresaFiltro;
   provincias: string[] = [];
-  especialidades: string[] = ['Electrodomésticos', 'funeraria'];
+  especialidades: string[] = ['Electrodomésticos', 'Funeraria'];
   contratado: string[] = ['Si', 'No'];
   @Input() data: string[];
 

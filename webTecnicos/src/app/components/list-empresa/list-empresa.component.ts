@@ -1,8 +1,8 @@
+import { FormularioComponent } from './../formulario/formulario.component';
 import { Router } from '@angular/router';
 import { EmpresaService } from './../../services/empresa.service';
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
-
+import { MatTableDataSource, MatSort, MatPaginator, MatDialog, MatDialogConfig } from '@angular/material';
 /*tabla:
 https://www.youtube.com/watch?v=ZL0d3M3uoRQ
 https://github.com/CodAffection/Angular-Material-Popup-Dialog-Model
@@ -21,7 +21,8 @@ export class ListEmpresaComponent implements OnInit {
 
   constructor(
     private empresaService: EmpresaService,
-    private route: Router
+    private route: Router,
+    private dialog: MatDialog
   ) { }
 
   listData: MatTableDataSource<any>;
@@ -29,6 +30,7 @@ export class ListEmpresaComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   searchKey: string;
+  
 
   ngOnInit() {
     this.paginator._intl.itemsPerPageLabel = 'Por página.';
@@ -85,13 +87,12 @@ export class ListEmpresaComponent implements OnInit {
   }
 
   onCreate() {
-    /* this.service.initializeFormGroup();
-     const dialogConfig = new MatDialogConfig();
-     dialogConfig.disableClose = true;
-     dialogConfig.autoFocus = true;
-     dialogConfig.width = "60%";
-     this.dialog.open(EmployeeComponent,dialogConfig);
-     */
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = "90%";
+    this.dialog.open(FormularioComponent,dialogConfig);
+    
   }
 
 

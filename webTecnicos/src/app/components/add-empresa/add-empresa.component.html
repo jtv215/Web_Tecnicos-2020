@@ -1,0 +1,74 @@
+<div class="row">
+  <div class="col-lg-6 col-md-2 mx-auto">
+    <div class="card">
+
+      <div class="card-header text-center">
+        Añadir Empresa
+      </div>
+
+      <div class="card-body">
+        <form #formRegistro="ngForm" (ngSubmit)="onSubmit()">
+
+          <div class="row justify-content-around">
+            <div class="form-group">
+              <input type="text" [(ngModel)]="empresa.provincia" name="provincia" class="form-control"
+                placeholder="Provincia*" required autofocus>
+            </div>
+
+            <div class="form-group">
+              <input type="text" [(ngModel)]="empresa.nombreEmpresa" name="nombreEmpresa*" class="form-control"
+                placeholder="Nombre de la Empresa*" required autofocus>
+            </div>
+
+          </div>
+
+          <div class="row justify-content-around">
+            <div class="form-group">
+              <input type="text" [(ngModel)]="empresa.nombreTecnico" name="direccion" class="form-control"
+                placeholder="Nombre Técnico" >
+            </div>
+
+            <div>
+              <mat-form-field>
+                <mat-label>Especialidad*</mat-label>
+                <mat-select [(value)]="empresa.especialidad" name="especialidad" [(ngModel)]="empresa.especialidad">
+                  <mat-option *ngFor="let item of especialidades" [value]="item">
+                    {{item}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+
+          <div class="row justify-content-around">
+            <div class="form-group">
+              <input type="text" [(ngModel)]="empresa.localidad" name="localidad" class="form-control"
+                placeholder="Localidad*" required autofocus>
+            </div>
+            <div class="form-group">
+              <input type="text" [(ngModel)]="empresa.telefono" name="telefono" class="form-control"
+                placeholder="Telefono*" required autofocus>
+            </div>
+          </div>
+
+
+          <div class="row justify-content-around">
+            <div class="form-group">
+              <input type="text" [(ngModel)]="empresa.email" name="email" class="form-control" placeholder="Email">
+            </div>
+            <div class="form-group">
+              <input type="text" [(ngModel)]="empresa.web" name="web" class="form-control" placeholder="Página web">
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block" [disabled]="!formRegistro.form.valid">
+            Añadir
+          </button>
+
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>

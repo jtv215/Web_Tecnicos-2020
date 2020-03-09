@@ -25,6 +25,7 @@ import { MensajeComponent } from './components/mensaje/mensaje.component';
 
 //copy
 import { ToastrModule } from 'ngx-toastr';
+import { AddEmpresaComponent } from './components/add-empresa/add-empresa.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { ToastrModule } from 'ngx-toastr';
     DetailEmpresaComponent,
     MensajeListComponent,
     MensajeComponent,
+    AddEmpresaComponent,
   ],
   imports: [
     BrowserModule,AppRoutingModule,
@@ -56,6 +58,7 @@ import { ToastrModule } from 'ngx-toastr';
   ],
   providers: [ AuthGuard,
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true }],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents:[FormularioComponent]
 })
 export class AppModule { }

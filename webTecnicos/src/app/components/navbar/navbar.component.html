@@ -1,6 +1,3 @@
-
- 
-
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
         <a class="navbar-brand" routerLink="/">Angular</a>
@@ -11,45 +8,48 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <ng-container *ngIf="!authService.loggedIn(); else loggedIn1">
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/inicio" routerLinkActivate="active">Inicio</a>
-                </li>
-            </ng-container>
-            <ng-template #loggedIn1>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/principal" routerLinkActivate="active">Principal</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/empresas" routerLinkActivate="active">Empresas</a>
-                </li>
-                <li class="nav-item" >
-                    <a class="nav-link" routerLink="/signup"  routerLinkActivate="active">
-                    Registrarse</a>
-                </li>
-                
-            </ng-template>
-               
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/inicio" routerLinkActivate="active">Inicio</a>
+                    </li>
+                </ng-container>
+                <ng-template #loggedIn1>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/principal" routerLinkActivate="active">Principal</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/empresas" routerLinkActivate="active">Empresas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/signup" routerLinkActivate="active">Registrarse</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/addempresa" routerLinkActivate="active">Añadir Empresa</a>
+                    </li>
+
+                </ng-template>
+
             </ul>
 
-            <ul class="navbar-nav ml-auto " >
+            <ul class="navbar-nav ml-auto ">
                 <ng-container *ngIf="!authService.loggedIn(); else loggedIn">
-                   
+
                     <li class="nav-item">
-                        <a class="nav-link" routerLink="/signin"  routerLinkActivate="active"> 
-                        <mat-icon class="material-icons"> person</mat-icon>Entrar</a>
+                        <a class="nav-link" routerLink="/signin" routerLinkActivate="active">
+                            <mat-icon class="material-icons"> person</mat-icon>Entrar
+                        </a>
                     </li>
                 </ng-container>
 
                 <ng-template #loggedIn>
                     <li class="nav-item">
-                        <a class="nav-link" style="cursor: pointer;" (click)="authService.outSesion()" >
-                        <mat-icon class="material-icons ">power_settings_new</mat-icon>Cerrar Sessión</a>
+                        <a class="nav-link" style="cursor: pointer;" (click)="authService.outSesion()">
+                            <mat-icon class="material-icons ">power_settings_new</mat-icon>Cerrar Sessión
+                        </a>
                     </li>
-                  
+
                 </ng-template>
 
             </ul>
         </div>
     </div>
 </nav>
-
