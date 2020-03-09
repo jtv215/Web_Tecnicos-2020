@@ -3,6 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { MensajeService } from './../../services/mensaje.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { formatDate } from '@angular/common';
+import { ToastrService  } from 'ngx-toastr';
 
 import { Subject } from "rxjs";
 @Component({
@@ -20,7 +21,8 @@ export class MensajeComponent implements OnInit {
   @Input() id: string;
 
   constructor(
-    private mensajeService: MensajeService
+    private mensajeService: MensajeService,
+    private toastr: ToastrService ,
   ) { }
 
 
@@ -33,12 +35,15 @@ export class MensajeComponent implements OnInit {
     if (confirm('¿Estas seguro de eliminar?')) {
       this.mensajeService.deleteMensaje(idMensaje).subscribe(
         result => {
-          if (result['code'] == 200) {
-            this.loadMensaje();
-          } else {
-            alert("Error al borrar mensaje");
-          }
-        }
+       //console.log(result.body['code'])
+       if (result.body['code'] == 200) {
+       
+        this.loadMensaje();
+     
+      } else {
+        alert("Error al borrar mensaje");
+      }
+    }
       );
     }
 

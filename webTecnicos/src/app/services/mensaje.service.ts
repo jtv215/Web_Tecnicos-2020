@@ -33,7 +33,8 @@ export class MensajeService {
   }
 
   deleteMensaje(id) {
-    return this.http.delete(this.url + 'mensaje/' + id);
+    let aid= {"idMensaje": id}  
+    return this.http.post(this.url + 'delete/mensaje',aid, httpOptions );
   }
 
 }

@@ -108,4 +108,5 @@ function verificarToken($request)
     } else {
         return true;
     }
+    
 }

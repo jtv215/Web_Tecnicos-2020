@@ -22,6 +22,10 @@
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/empresas" routerLinkActivate="active">Empresas</a>
                 </li>
+                <li class="nav-item" >
+                    <a class="nav-link" routerLink="/signup"  routerLinkActivate="active">
+                    Registrarse</a>
+                </li>
                 
             </ng-template>
                
@@ -29,10 +33,7 @@
 
             <ul class="navbar-nav ml-auto " >
                 <ng-container *ngIf="!authService.loggedIn(); else loggedIn">
-                    <li class="nav-item" >
-                        <a class="nav-link" routerLink="/signup"  routerLinkActivate="active">
-                        <mat-icon class="material-icons">person_add</mat-icon>Registrarse</a>
-                    </li>
+                   
                     <li class="nav-item">
                         <a class="nav-link" routerLink="/signin"  routerLinkActivate="active"> 
                         <mat-icon class="material-icons"> person</mat-icon>Entrar</a>

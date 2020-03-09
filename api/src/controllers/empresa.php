@@ -188,7 +188,8 @@ $app->post('/actualizarEmpresa', function (Request $request, Response $response,
 });
 
 //* Borrar empresa y sus tablas en cascada pasandole por parámetros un Id de empresa*//  ok
-$app->delete('/empresa/{idEmpresa}', function (Request $request, Response $response) {
+$deleteEmpresa="";
+$app->post('/delete/empresa/{idEmpresa}', function (Request $request, Response $response) {
     $idEmpresa = $request->getAttribute('idEmpresa');
 
     $sql = "DELETE FROM empresa WHERE idEmpresa = '" . $idEmpresa . "' ";

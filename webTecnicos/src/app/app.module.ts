@@ -24,6 +24,7 @@ import { MensajeListComponent } from './components/mensaje-list/mensaje-list.com
 import { MensajeComponent } from './components/mensaje/mensaje.component';
 
 //copy
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,11 @@ import { MensajeComponent } from './components/mensaje/mensaje.component';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     CopyClipboardModule,
+    ToastrModule.forRoot({
+      timeOut: 10000,
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+    }),
   ],
   providers: [ AuthGuard,
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true }],
