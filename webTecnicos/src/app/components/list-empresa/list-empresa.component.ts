@@ -1,3 +1,4 @@
+import { AddEmpresaComponent } from './../add-empresa/add-empresa.component';
 import { FormularioComponent } from './../formulario/formulario.component';
 import { Router } from '@angular/router';
 import { EmpresaService } from './../../services/empresa.service';
@@ -84,7 +85,6 @@ export class ListEmpresaComponent implements OnInit {
           }
         }
       );
-      // this.notificationService.warn('! Deleted successfully');
     }
   }
 
@@ -92,8 +92,8 @@ export class ListEmpresaComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = false;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = "90%";
-    this.dialog.open(FormularioComponent,dialogConfig);
+    dialogConfig.width = "70%";
+    this.dialog.open(AddEmpresaComponent,dialogConfig);
     
   }
 
@@ -102,13 +102,6 @@ export class ListEmpresaComponent implements OnInit {
   onEdit(row) {
     console.log(row['idEmpresa']);
     this.route.navigate(['/empresa/' + row['idEmpresa']]);
-
-    /* this.service.populateForm(row);
-     const dialogConfig = new MatDialogConfig();
-     dialogConfig.disableClose = true;
-     dialogConfig.autoFocus = true;
-     dialogConfig.width = "60%";
-     this.dialog.open(EmployeeComponent,dialogConfig)*/
   }
 
 }

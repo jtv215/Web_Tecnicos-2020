@@ -47,4 +47,12 @@ export class AddEmpresaComponent implements OnInit {
 
       })
   }
+
+
+  onClear(formRegistro) {
+    formRegistro.reset();
+    //console.log(this.empresa)
+
+  }
+
 }

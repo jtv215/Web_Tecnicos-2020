@@ -59,6 +59,6 @@ import { AddEmpresaComponent } from './components/add-empresa/add-empresa.compon
   providers: [ AuthGuard,
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true }],
   bootstrap: [AppComponent],
-  entryComponents:[FormularioComponent]
+  entryComponents:[AddEmpresaComponent]
 })
 export class AppModule { }
