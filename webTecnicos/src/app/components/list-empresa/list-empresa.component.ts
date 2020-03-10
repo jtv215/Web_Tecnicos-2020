@@ -100,7 +100,7 @@ export class ListEmpresaComponent implements OnInit {
 
 
   onEdit(row) {
-    console.log(row['idEmpresa']);
+    //console.log(row['idEmpresa']);
     this.route.navigate(['/empresa/' + row['idEmpresa']]);
   }
 

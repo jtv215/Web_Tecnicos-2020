@@ -1,0 +1,134 @@
+<div class="row">
+  <div class="mx-auto">
+    <div class="card">
+
+      <div class="card-header text-center">
+        Editar Empresa
+      </div>
+
+      <div class="card-body">
+        <form #formRegistro="ngForm" (ngSubmit)="onSubmit()">
+
+          <!---------------- FILA 1  ---------------------->
+          <div class="d-flex bd-highlight mb-3 flex-wrap">
+
+            <div class="form-group p-2">
+              <mat-label class="label">Provincia*</mat-label>
+              <input type="text" [(ngModel)]="empresa.provincia" name="provincia" class="form-control"
+                placeholder="Provincia*" required autofocus>
+            </div>
+
+            <div class="form-group p-2">
+              <mat-label class="label">Nombre Empresa*</mat-label>
+              <input type="text" [(ngModel)]="empresa.nombreEmpresa" name="nombreEmpresa*" class="form-control"
+                placeholder="Nombre Empresa*" required autofocus>
+            </div>
+
+            <div class="form-group p-2 ">
+              <mat-label class="label">Nombre Técnico</mat-label>
+              <input type="text" [(ngModel)]="empresa.nombreTecnico" name="nombreTecnico" class="form-control"
+                placeholder="Nombre Técnico">
+            </div>
+
+            <div class="form-group p-2">
+              <mat-form-field>
+                <mat-label>Especialidad*</mat-label>
+                <mat-select [(value)]="empresa.especialidad" name="especialidad" [(ngModel)]="empresa.especialidad">
+                  <mat-option *ngFor="let item of especialidades" [value]="item">
+                    {{item}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="form-group p-2">
+              <mat-label class="label">Email</mat-label>
+              <input type="text" [(ngModel)]="empresa.email" name="email" class="form-control" placeholder="Email">
+            </div>
+
+          </div>
+
+
+          <!---------------- FILA 2    -->
+          <div class="d-flex bd-highlight mb-3 flex-wrap">
+            <div class="form-group p-2">
+              <mat-label class="label">Direccion</mat-label>
+              <input type="text" [(ngModel)]="empresa.direccion" name="direccion" class="form-control"
+                placeholder="Direccion">
+            </div>
+
+
+
+            <div class="form-group p-2">
+              <mat-label class="label">Página web</mat-label>
+              <input type="text" [(ngModel)]="empresa.web" name="web" class="form-control" placeholder="Página web">
+            </div>
+
+            <div class="form-group p-2">
+              <mat-label class="label">Horario</mat-label>
+              <input type="text" [(ngModel)]="empresa.horario" name="horario" class="form-control"
+                placeholder="Horario">
+            </div>
+
+            <div class="form-group p-2">
+              <mat-label class="label">Contratado*</mat-label>
+              <input type="text" [(ngModel)]="empresa.contratado" name="contratado" class="form-control"
+                placeholder="Contratado">
+            </div>
+
+            <div class="form-group p-2">
+              <mat-label class="label">Publicado en</mat-label>
+              <input type="text" [(ngModel)]="empresa.webFound" name="webFound" class="form-control"
+                placeholder="webFound">
+            </div>
+
+          </div>
+
+      
+          <!---------------- FILA 3  ---------------------->
+          <div class="d-flex bd-highlight mb-3 flex-wrap">
+
+
+            <div class="form-group p-2">
+              <mat-label class="label">Interesado*</mat-label>
+              <input type="text" [(ngModel)]="empresa.interesado" name="interesado" class="form-control"
+                placeholder="Interesado">
+            </div>
+
+
+            <div class="form-group p-2">
+              <mat-label class="label">Ocultar*</mat-label>
+              <input type="text" [(ngModel)]="empresa.ocultar" name="ocultar" class="form-control"
+                placeholder="Ocultar">
+            </div>
+
+            <div class="form-group p-2">
+              <mat-label class="label">Especificacion</mat-label>
+              <input type="text" [(ngModel)]="empresa.especificacion" name="especificacion" class="form-control"
+                placeholder="Especificacion">
+            </div>
+
+          </div>
+
+          <!---------------- FILA 4  ---------------------->
+
+          <div class="form-group p-2">
+            <mat-label class="label">Comentario</mat-label>
+            <input type="text" [(ngModel)]="empresa.comentario" name="comentario" class="form-control"
+              placeholder="Comentario">
+          </div>
+
+
+          <!---------------- FILA 5 ---------------------->
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block" [disabled]="!formRegistro.form.valid">
+              Cambiar
+            </button>
+          </div>
+
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>

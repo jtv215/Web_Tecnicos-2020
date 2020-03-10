@@ -1,3 +1,4 @@
+import { EditEmpresaComponent } from './components/edit-empresa/edit-empresa.component';
 import { AddEmpresaComponent } from './components/add-empresa/add-empresa.component';
 import { DetailEmpresaComponent } from './components/detail-empresa/detail-empresa.component';
 import { FormularioComponent } from './components/formulario/formulario.component';
@@ -37,7 +38,13 @@ const routes: Routes = [
     path: 'addempresa', component: AddEmpresaComponent,
     canActivate: [AuthGuard]
   },
+  {
+    path: 'editempresa/:id', component: EditEmpresaComponent,
+    canActivate: [AuthGuard]
+  },
 
+
+  
   { path: '**', component: HomeComponent }//cuando hay algun fallo
 
 

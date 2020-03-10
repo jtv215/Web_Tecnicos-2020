@@ -54,26 +54,23 @@ export class MensajeListComponent implements OnInit {
       result => {
         let data = result['body'];
         if (data['code'] == 200) {
-         
-        // console.log("eee")
-        
+                
           } else {
             console.log(result.body)
             alert("Error al añadir mensaje");
           }
-//       
       },
       error => {
         console.log(<any>error)
       }
     );
   }
-
+/*
   resetFormulario(idFormulario: NgForm) {
     if (idFormulario != null) {
       idFormulario.reset();
     }
   }
-
+*/
 
 }

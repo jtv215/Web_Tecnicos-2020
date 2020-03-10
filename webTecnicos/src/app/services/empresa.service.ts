@@ -49,4 +49,7 @@ export class EmpresaService {
     return this.http.post(this.url + 'empresa', empresa, httpOptions);
   }
 
+  updateEmpresa(empresa) {
+    return this.http.post(this.url + 'actualizarEmpresa', empresa, httpOptions);
+  }
 }

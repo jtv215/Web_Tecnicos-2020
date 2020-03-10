@@ -26,6 +26,7 @@ import { MensajeComponent } from './components/mensaje/mensaje.component';
 //copy
 import { ToastrModule } from 'ngx-toastr';
 import { AddEmpresaComponent } from './components/add-empresa/add-empresa.component';
+import { EditEmpresaComponent } from './components/edit-empresa/edit-empresa.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { AddEmpresaComponent } from './components/add-empresa/add-empresa.compon
     MensajeListComponent,
     MensajeComponent,
     AddEmpresaComponent,
+    EditEmpresaComponent,
   ],
   imports: [
     BrowserModule,AppRoutingModule,
