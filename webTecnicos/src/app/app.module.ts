@@ -27,6 +27,7 @@ import { MensajeComponent } from './components/mensaje/mensaje.component';
 import { ToastrModule } from 'ngx-toastr';
 import { AddEmpresaComponent } from './components/add-empresa/add-empresa.component';
 import { EditEmpresaComponent } from './components/edit-empresa/edit-empresa.component';
+import { AddTelefonoComponent } from './components/add-telefono/add-telefono.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { EditEmpresaComponent } from './components/edit-empresa/edit-empresa.com
     MensajeComponent,
     AddEmpresaComponent,
     EditEmpresaComponent,
+    AddTelefonoComponent,
   ],
   imports: [
     BrowserModule,AppRoutingModule,
@@ -52,7 +54,7 @@ import { EditEmpresaComponent } from './components/edit-empresa/edit-empresa.com
     BrowserAnimationsModule,
     ReactiveFormsModule,
     CopyClipboardModule,
-    ToastrModule.forRoot({
+    ToastrModule.forRoot({ //he puesto el css de toasmodule en el css principal
       timeOut: 10000,
       positionClass: 'toast-bottom-right',
       preventDuplicates: true,
@@ -61,6 +63,6 @@ import { EditEmpresaComponent } from './components/edit-empresa/edit-empresa.com
   providers: [ AuthGuard,
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true }],
   bootstrap: [AppComponent],
-  entryComponents:[AddEmpresaComponent]
+  entryComponents:[AddEmpresaComponent, AddTelefonoComponent]
 })
 export class AppModule { }

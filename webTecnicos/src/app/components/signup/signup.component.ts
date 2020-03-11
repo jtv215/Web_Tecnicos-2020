@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { AuthService } from './../../services/auth.service';
 import { Component, OnInit, Input } from '@angular/core';
@@ -19,6 +20,7 @@ export class SignupComponent implements OnInit {
 
   //importar servicio y pasar por el contrucor para instancear y poder usarlo
   constructor(
+    private toastrService: ToastrService,
     private authService: AuthService,
     private route: Router) { }
 
@@ -32,6 +34,8 @@ export class SignupComponent implements OnInit {
           this.code = result.body['code'];
           //console.log(result.body['code'])
           if (this.code == '200') {
+            this.toastrService.success('Éxito','Se ha registrado correctamente');
+
             this.message = "Se ha registrado correctamente";
             this.mostrar = true;
           } else {

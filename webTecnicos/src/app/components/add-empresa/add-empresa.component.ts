@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { EmpresaService } from './../../services/empresa.service';
 import { Empresa } from './../../models/empresa';
 import { Component, OnInit } from '@angular/core';
@@ -13,7 +14,8 @@ export class AddEmpresaComponent implements OnInit {
   code: string;
 
   constructor(
-    private empresaService: EmpresaService
+    private empresaService: EmpresaService,
+    private toastrservice: ToastrService,
 
   ) {
     this.empresa = new Empresa("", "", "", "", "",
@@ -28,22 +30,17 @@ export class AddEmpresaComponent implements OnInit {
 
   ngOnInit() {
   }
-
+ 
 
   onSubmit() {
   //  console.log(this.empresa);
 
     this.empresaService.addEmpresa(this.empresa).subscribe(
       result => {
-        this.code = result.body['code'];
-        if (this.code == '200') {
+        this.code = result.body['code'];        
         //  console.log(result.body['data'])
+        this.toastrservice.success('Exito', 'Se ha añadido la empresa correctamente');
 
-        } else {
-          alert("Error al borrar mensaje");
-          //console.log(result.body['data'])
-
-        }
 
       })
   }

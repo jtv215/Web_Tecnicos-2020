@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { AddEmpresaComponent } from './../add-empresa/add-empresa.component';
 import { FormularioComponent } from './../formulario/formulario.component';
 import { Router } from '@angular/router';
@@ -23,8 +24,11 @@ export class ListEmpresaComponent implements OnInit {
   constructor(
     private empresaService: EmpresaService,
     private route: Router,
-    private dialog: MatDialog
-  ) { }
+    private dialog: MatDialog,
+    private toastrService: ToastrService,
+
+  ) {
+   }
 
   listData: MatTableDataSource<any>;
   displayedColumns: string[] = ['idEmpresa', 'provincia', 'nombreEmpresa', 'especialidad', 'contratado', 'actions'];
@@ -60,6 +64,11 @@ export class ListEmpresaComponent implements OnInit {
   cargarDataFiltro(dataFiltro) {
     this.rellenarTabla(dataFiltro);
   }
+  showSuccess(){
+    setTimeout(() => {
+      this.toastrService.success('Éxito','Se ha eliminado correctamente');
+    });
+  }
 
   onSearchClear() {
     this.searchKey = "";
@@ -80,6 +89,8 @@ export class ListEmpresaComponent implements OnInit {
 
           if (this.code == '200') {
             this.cargarTablaWithService()
+            this.toastrService.success('Exito', 'Se ha añadido correctamente');
+
           } else {
             alert("Error al borrar mensaje");
           }
@@ -100,7 +111,6 @@ export class ListEmpresaComponent implements OnInit {
 
 
   onEdit(row) {
-    //console.log(row['idEmpresa']);
     this.route.navigate(['/empresa/' + row['idEmpresa']]);
   }
 

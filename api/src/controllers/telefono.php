@@ -74,8 +74,11 @@ $app->put('/telefono/{idTelefono}/{telefono}', function (Request $request, Respo
 });
 
 //* Borrar telefono con un Id del telefono*//   ok
-$app->delete('/telefono/{idTelefono}', function (Request $request, Response $response) {
-    $idTelefono = $request->getAttribute('idTelefono');
+$app->post('/delete/telefono', function (Request $request, Response $response) {
+   // $idTelefono = $request->getAttribute('idTelefono');
+    $json = $request->getBody();
+    $data = json_decode($json, true);
+    $idTelefono =$data['idTelefono'];
 
     $sql = "DELETE FROM telefono WHERE idTelefono = '" . $idTelefono . "' ";
     $stmt = executeQuery($sql);

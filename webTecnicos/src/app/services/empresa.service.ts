@@ -1,3 +1,4 @@
+import { Subject, Observable } from 'rxjs';
 import { GLOBAL } from './global';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -14,6 +15,7 @@ const httpOptions = {
 })
 export class EmpresaService {
   public url: string;
+  public subject$ = new Subject<void>();
 
   constructor(
     public http: HttpClient ) {
@@ -22,6 +24,10 @@ export class EmpresaService {
 
   getPrueba() {
     return "Probando servicio Empresa";
+  }
+
+  get refreshEmpresa$(){
+    return this.subject$;
   }
 
   getEmpresa(id) {
@@ -52,4 +58,15 @@ export class EmpresaService {
   updateEmpresa(empresa) {
     return this.http.post(this.url + 'actualizarEmpresa', empresa, httpOptions);
   }
+
+  addTelefono(telefono):Observable<any> {
+    return (this.http.post(this.url + 'telefono', telefono, httpOptions));
+  }
+
+  deleteTelefono(telefono) {
+    return this.http.post(this.url + 'delete/telefono', telefono, httpOptions);
+  }
+
+
+
 }

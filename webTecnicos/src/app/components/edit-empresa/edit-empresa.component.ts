@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { MatDialogConfig, MatDialog } from '@angular/material';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { EmpresaService } from './../../services/empresa.service';
@@ -13,8 +14,10 @@ export class EditEmpresaComponent implements OnInit {
   especialidades: string[] = ['Electrodomésticos', 'Funeraria'];
   empresa: Empresa;
   code: string;
+  id: string;
   constructor(
     private empresaService: EmpresaService,
+    private toastrservice: ToastrService,
     private route: ActivatedRoute,
     private router: Router,
   ) {
@@ -36,7 +39,9 @@ export class EditEmpresaComponent implements OnInit {
         result => {
           if (result['code'] == 200) {
             this.empresa = result['data'];
-            //this.telefonos = result['telefono'];
+            console.log(this.empresa);
+            this.id = this.empresa['idEmpresa'];
+
           }
 
         },
@@ -51,33 +56,28 @@ export class EditEmpresaComponent implements OnInit {
 
 
   onSubmit() {
-
-    this.route.params.forEach((params: Params) => {
-      let id = params['id'];
-
-      this.updateData();
-
-      this.router.navigate(['/empresa/' + id]);    
-
-    });
+    this.updateData();
+    this.router.navigate(['/empresa/' + this.id]);
   }
 
 
-  updateData(){
-    
+  updateData() {
+
     this.empresaService.updateEmpresa(this.empresa).subscribe(
       result => {
         this.code = result.body['code'];
-        if (this.code == '200') {
-        //  console.log(result.body['data'])
+       // console.log(this.code);
 
-        } else {
-          alert("Error al borrar mensaje");
-          //console.log(result.body['data'])
-
-        }
+        // tambien recibes un 404 porque no se ha cambiado nada
+        this.toastrservice.success('Éxito','Se ha actualizado correctamente');
 
       });
+
+  }
+
+  onBack(){
+
+    this.router.navigate(['/empresa/'+this.id]);
 
   }
 

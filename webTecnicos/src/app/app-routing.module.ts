@@ -1,3 +1,4 @@
+import { AddTelefonoComponent } from './components/add-telefono/add-telefono.component';
 import { EditEmpresaComponent } from './components/edit-empresa/edit-empresa.component';
 import { AddEmpresaComponent } from './components/add-empresa/add-empresa.component';
 import { DetailEmpresaComponent } from './components/detail-empresa/detail-empresa.component';
@@ -42,8 +43,12 @@ const routes: Routes = [
     path: 'editempresa/:id', component: EditEmpresaComponent,
     canActivate: [AuthGuard]
   },
+  {
+    path: 'addtelefono', component: AddTelefonoComponent,
+    canActivate: [AuthGuard]
+  },
 
-
+  
   
   { path: '**', component: HomeComponent }//cuando hay algun fallo
 
