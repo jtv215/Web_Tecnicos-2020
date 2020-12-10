@@ -16,6 +16,9 @@ export class Empresa {
         public interesado: string,
         public comentario: string,
         public creacion: string,
-        public ocultar: string
+        public ocultar: string,
+        public localidad: string,
+        public telefono: string
+
     ) { }
 }

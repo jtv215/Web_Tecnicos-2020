@@ -23,11 +23,11 @@ import { DetailEmpresaComponent } from './components/detail-empresa/detail-empre
 import { MensajeListComponent } from './components/mensaje-list/mensaje-list.component';
 import { MensajeComponent } from './components/mensaje/mensaje.component';
 
-//copy
 import { ToastrModule } from 'ngx-toastr';
 import { AddEmpresaComponent } from './components/add-empresa/add-empresa.component';
 import { EditEmpresaComponent } from './components/edit-empresa/edit-empresa.component';
 import { AddTelefonoComponent } from './components/add-telefono/add-telefono.component';
+
 
 @NgModule({
   declarations: [
@@ -54,7 +54,7 @@ import { AddTelefonoComponent } from './components/add-telefono/add-telefono.com
     BrowserAnimationsModule,
     ReactiveFormsModule,
     CopyClipboardModule,
-    ToastrModule.forRoot({ //he puesto el css de toasmodule en el css principal
+    ToastrModule.forRoot({
       timeOut: 10000,
       positionClass: 'toast-bottom-right',
       preventDuplicates: true,

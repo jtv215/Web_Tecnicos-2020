@@ -21,7 +21,7 @@ export class AddEmpresaComponent implements OnInit {
     this.empresa = new Empresa("", "", "", "", "",
       "", "", "", "", "",
       "", "", "", "", "",
-      "", "")
+      "", "","", "")
       this.empresa['contratado'] = "no";
       this.empresa['repetido'] = "no";
       this.empresa['ocultar'] = "no";

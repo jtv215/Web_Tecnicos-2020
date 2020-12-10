@@ -36,11 +36,14 @@ export class SignupComponent implements OnInit {
           if (this.code == '200') {
             this.toastrService.success('Éxito','Se ha registrado correctamente');
 
-            this.message = "Se ha registrado correctamente";
-            this.mostrar = true;
+          /*  this.message = "Se ha registrado correctamente";
+            this.mostrar = true;*/
+            
           } else {
-            this.message = "El correo ya existe*";
-            this.mostrar = true;
+            this.toastrService.error('Error','El correo ya existe*');
+
+           /* this.message = "El correo ya existe*";
+            this.mostrar = true;*/
           }
         })
   }
